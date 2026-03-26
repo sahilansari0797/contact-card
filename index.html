@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Sahil Ansari – Contact Card</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:'Segoe UI', sans-serif;
+    background:#e8edf4;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    min-height:100vh; padding:24px;
+  }
+  .card { width:560px; border-radius:20px; overflow:hidden; box-shadow:0 20px 56px rgba(30,60,100,0.13); }
+
+  .header {
+    background: linear-gradient(135deg, #1b3f6e 0%, #1e6f7e 100%);
+    padding: 38px 30px 48px;
+    text-align: center; position: relative;
+  }
+  .header::after {
+    content:''; position:absolute; bottom:-1px; left:0; right:0; height:30px;
+    background:#f4f7fb; border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .avatar {
+    width:80px; height:80px; border-radius:50%;
+    background:rgba(255,255,255,0.12);
+    border:2.5px solid rgba(255,255,255,0.4);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; font-weight:700; color:#e0f4f6;
+    margin:0 auto 14px;
+  }
+  .name { color:#fff; font-size:22px; font-weight:700; }
+  .company { color:rgba(190,230,235,0.85); font-size:11.5px; margin:7px auto 0; line-height:1.6; max-width:340px; }
+
+  .body { background:#f4f7fb; padding:26px 28px 32px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
+  .item { display:flex; align-items:flex-start; gap:11px; background:#fff; border-radius:11px; padding:12px 14px; border:1px solid #dce6f0; }
+  .item.full { grid-column:1/-1; }
+  .ic { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; color:#fff; }
+  .g1{background:#1b3f6e} .g2{background:#1e5c70} .g3{background:#1e7e72} .g4{background:#1a6b7a} .g5{background:#154f68} .g6{background:#0a7a8f}
+  .lbl { font-size:9px; color:#8fa3bb; text-transform:uppercase; letter-spacing:.6px; margin-bottom:2px; }
+  .val { font-size:12.5px; color:#1e2d3d; font-weight:600; line-height:1.5; }
+  .val a { color:#1a6b7a; text-decoration:none; }
+  .val a:hover { text-decoration:underline; }
+
+  .footer { background:linear-gradient(135deg,#1b3f6e 0%,#1e6f7e 100%); padding:13px 20px; text-align:center; }
+  .footer span { color:rgba(190,230,235,0.8); font-size:10.5px; }
+
+  .btn-row { margin-top:18px; display:flex; justify-content:center; }
+  .btn {
+    background:linear-gradient(135deg,#1b3f6e,#1e7e72); color:#fff; border:none;
+    border-radius:30px; padding:10px 28px; font-size:13px; font-weight:600;
+    cursor:pointer; box-shadow:0 4px 16px rgba(27,63,110,0.25); transition:opacity .2s;
+  }
+  .btn:hover { opacity:.85; }
+  @media print { .btn-row{display:none;} body{background:#fff;} }
+  @media (max-width:600px) { .card{width:100%;} .grid{grid-template-columns:1fr;} .item.full{grid-column:1;} }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="avatar">SA</div>
+    <div class="name">Md. Sahil Ansari</div>
+    <div class="company">Wedo Solutions Arabia for Information and Technology</div>
+  </div>
+
+  <div class="body">
+    <div class="grid">
+      <div class="item">
+        <div class="ic g1"><i class="fas fa-phone"></i></div>
+        <div><div class="lbl">KSA Mobile</div><div class="val">+966-544410534</div></div>
+      </div>
+      <div class="item">
+        <div class="ic g2"><i class="fas fa-phone"></i></div>
+        <div><div class="lbl">India Mobile</div><div class="val">+91-7785013899</div></div>
+      </div>
+      <div class="item">
+        <div class="ic g3"><i class="fas fa-envelope"></i></div>
+        <div><div class="lbl">Work Email</div><div class="val"><a href="mailto:sahil.ansari@wedosolutions.sa">sahil.ansari@wedosolutions.sa</a></div></div>
+      </div>
+      <div class="item">
+        <div class="ic g4"><i class="fas fa-envelope"></i></div>
+        <div><div class="lbl">Personal Email</div><div class="val"><a href="mailto:muhammadsahil1997@gmail.com">muhammadsahil1997@gmail.com</a></div></div>
+      </div>
+      <div class="item full">
+        <div class="ic g5"><i class="fas fa-location-dot"></i></div>
+        <div><div class="lbl">Location</div><div class="val">Riyadh, Saudi Arabia</div></div>
+      </div>
+      <div class="item full">
+        <div class="ic g6"><i class="fab fa-linkedin-in"></i></div>
+        <div><div class="lbl">LinkedIn</div><div class="val"><a href="https://www.linkedin.com/in/sahilansari7" target="_blank">linkedin.com/in/sahilansari7</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Wedo Solutions Arabia for Information and Technology &nbsp;·&nbsp; Riyadh, Saudi Arabia</span>
+  </div>
+</div>
+
+<div class="btn-row">
+  <button class="btn" onclick="window.print()">🖨️ Save as PDF</button>
+</div>
+
+</body>
+</html>
