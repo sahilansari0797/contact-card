@@ -154,10 +154,27 @@
   .item:nth-child(6){animation:popIn .4s ease .65s both}
   .item:nth-child(7){animation:popIn .4s ease .72s both}
 
+  /* Lock grid — never go 2-col unless card has enough room */
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; }
+
   @media print {
-    .btn-row{display:none!important;} .toast{display:none!important;}
-    body{background:#fff!important;padding:0;}
-    .card{box-shadow:none;border:1px solid #ddd;}
+    * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    body {
+      background:#0d1f35 !important;
+      padding:0 !important;
+      display:block !important;
+      margin:0 !important;
+    }
+    .btn-row { display:none !important; }
+    .toast { display:none !important; }
+    .card {
+      width:100% !important;
+      max-width:100% !important;
+      border-radius:0 !important;
+      box-shadow:none !important;
+      margin:0 !important;
+    }
+    .avatar-ring { animation:none !important; }
   }
   @media (max-width:760px) {
     body { padding:0; justify-content:flex-start; }
