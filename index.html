@@ -159,7 +159,7 @@
     body{background:#fff!important;padding:0;}
     .card{box-shadow:none;border:1px solid #ddd;}
   }
-  @media (max-width:600px) {
+  @media (max-width:760px) {
     body { padding:0; justify-content:flex-start; }
     .card { width:100%; border-radius:0 0 28px 28px; }
     .header { padding:36px 20px 46px; }
@@ -167,11 +167,11 @@
     .name { font-size:20px; }
     .company { font-size:11px; }
     .body { padding:20px 14px 24px; }
-    .grid { grid-template-columns:1fr; gap:9px; }
-    .item { grid-column:1!important; padding:12px 14px; }
+    .grid { grid-template-columns:1fr !important; gap:9px; }
+    .item { grid-column:1 !important; padding:12px 14px; width:100%; }
     .ic { width:32px; height:32px; font-size:12px; }
     .lbl { font-size:8.5px; }
-    .val { font-size:12.5px; word-break:break-word; }
+    .val { font-size:12.5px; word-break:break-word; overflow-wrap:break-word; max-width:100%; }
     .save-tag { font-size:9px; padding:2px 8px; margin-left:6px; }
     .footer span { font-size:9.5px; }
     .btn-row { padding:16px 14px 32px; }
