@@ -7,57 +7,220 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'Segoe UI',sans-serif; background:#e8edf4; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
-  .card { width:560px; border-radius:20px; overflow:hidden; box-shadow:0 20px 56px rgba(30,60,100,0.13); }
+
+  body {
+    font-family:'Segoe UI',sans-serif;
+    min-height:100vh;
+    background: #0d1f35;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(30,111,126,0.35) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 80%, rgba(27,63,110,0.4) 0%, transparent 55%),
+      radial-gradient(ellipse at 60% 10%, rgba(14,90,95,0.2) 0%, transparent 45%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:32px 16px;
+  }
+
+  /* Floating orbs background */
+  body::before {
+    content:''; position:fixed; top:-120px; right:-120px;
+    width:400px; height:400px; border-radius:50%;
+    background:radial-gradient(circle, rgba(30,126,114,0.18), transparent 70%);
+    pointer-events:none;
+  }
+  body::after {
+    content:''; position:fixed; bottom:-100px; left:-100px;
+    width:350px; height:350px; border-radius:50%;
+    background:radial-gradient(circle, rgba(27,63,110,0.22), transparent 70%);
+    pointer-events:none;
+  }
+
+  .card {
+    width:520px; border-radius:28px; overflow:hidden;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    box-shadow:
+      0 32px 80px rgba(0,0,0,0.4),
+      0 0 0 1px rgba(255,255,255,0.06) inset;
+    position:relative; z-index:1;
+  }
 
   /* HEADER */
-  .header { background:linear-gradient(135deg,#1b3f6e 0%,#1e6f7e 100%); padding:38px 30px 48px; text-align:center; position:relative; }
-  .header::after { content:''; position:absolute; bottom:-1px; left:0; right:0; height:30px; background:#f4f7fb; border-radius:50% 50% 0 0/100% 100% 0 0; }
-  .avatar { width:80px; height:80px; border-radius:50%; background:rgba(255,255,255,0.12); border:2.5px solid rgba(255,255,255,0.4); display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:700; color:#e0f4f6; margin:0 auto 14px; }
-  .name { color:#fff; font-size:22px; font-weight:700; }
-  .company-link { text-decoration:none; }
-  .company { color:rgba(190,230,235,0.85); font-size:11.5px; margin:7px auto 0; line-height:1.6; max-width:340px; transition:opacity .2s; }
-  .company-link:hover .company { opacity:.65; }
+  .header {
+    background:linear-gradient(145deg, #1b3f6e 0%, #0e5a5f 50%, #1e7e72 100%);
+    padding:42px 32px 52px; text-align:center; position:relative; overflow:hidden;
+  }
+  .header::before {
+    content:''; position:absolute; top:-60px; left:-60px;
+    width:220px; height:220px; border-radius:50%;
+    background:rgba(255,255,255,0.04); pointer-events:none;
+  }
+  .header::after {
+    content:''; position:absolute; bottom:-1px; left:0; right:0; height:32px;
+    background:rgba(255,255,255,0.04);
+    border-radius:50% 50% 0 0/100% 100% 0 0;
+    backdrop-filter:blur(4px);
+  }
+
+  /* Decorative ring behind avatar */
+  .avatar-wrap { position:relative; display:inline-block; margin-bottom:16px; }
+  .avatar-ring {
+    position:absolute; top:-8px; left:-8px; right:-8px; bottom:-8px;
+    border-radius:50%; border:1.5px solid rgba(255,255,255,0.15);
+    animation:spin 12s linear infinite;
+  }
+  .avatar-ring::before {
+    content:''; position:absolute; top:6px; left:6px;
+    width:10px; height:10px; border-radius:50%;
+    background:rgba(30,200,180,0.7);
+  }
+  @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+  .avatar {
+    width:82px; height:82px; border-radius:50%;
+    background:linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+    border:2px solid rgba(255,255,255,0.3);
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px; font-weight:700; color:#e0f4f6;
+    position:relative; z-index:1;
+    box-shadow:0 8px 32px rgba(0,0,0,0.25);
+  }
+
+  .name { color:#fff; font-size:22px; font-weight:700; letter-spacing:.3px; }
+  .dept-badge {
+    display:inline-block; margin:8px auto 0;
+    background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2);
+    border-radius:20px; padding:4px 14px;
+    font-size:11px; color:rgba(200,240,235,0.9); letter-spacing:.5px;
+  }
+  .company-link { text-decoration:none; display:block; margin-top:10px; }
+  .company {
+    color:rgba(180,225,230,0.75); font-size:11.5px;
+    line-height:1.6; max-width:340px; margin:0 auto;
+    transition:color .2s;
+  }
+  .company-link:hover .company { color:rgba(200,240,235,0.95); }
 
   /* BODY */
-  .body { background:#f4f7fb; padding:26px 28px 32px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; }
-  .item { display:flex; align-items:flex-start; gap:11px; background:#fff; border-radius:11px; padding:12px 14px; border:1px solid #dce6f0; }
-  .item.full { grid-column:1/-1; }
-  .ic { width:34px; height:34px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px; color:#fff; }
-  .g1{background:#1b3f6e} .g2{background:#1e5c70} .g3{background:#1e7e72} .g4{background:#1a6b7a} .g5{background:#154f68} .g6{background:#0a7a8f}
-  .lbl { font-size:9px; color:#8fa3bb; text-transform:uppercase; letter-spacing:.6px; margin-bottom:2px; }
-  .val { font-size:12.5px; color:#1e2d3d; font-weight:600; line-height:1.5; }
-  .val a { color:#1a6b7a; text-decoration:none; }
-  .val a:hover { text-decoration:underline; }
+  .body {
+    background:rgba(10,25,45,0.6);
+    padding:28px 28px 32px;
+    backdrop-filter:blur(10px);
+  }
 
-  /* Save pill button */
-  .save-tag { font-size:9px; font-weight:600; color:#1b3f6e; background:#e8f0fb; border:1px solid #c8d8f0; border-radius:20px; padding:2px 8px; margin-left:7px; cursor:pointer; white-space:nowrap; transition:background .2s; vertical-align:middle; display:inline-block; }
-  .save-tag:hover { background:#d0e2f8; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .item {
+    display:flex; align-items:flex-start; gap:12px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px; padding:13px 14px;
+    transition:background .2s, border-color .2s, transform .2s;
+  }
+  .item:hover { background:rgba(255,255,255,0.09); border-color:rgba(255,255,255,0.15); transform:translateY(-1px); }
+  .item.full { grid-column:1/-1; }
+
+  .ic {
+    width:34px; height:34px; border-radius:9px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:#fff;
+  }
+  .g1{background:linear-gradient(135deg,#1b3f6e,#2a5a8e)}
+  .g2{background:linear-gradient(135deg,#1e5c70,#2a7a90)}
+  .g3{background:linear-gradient(135deg,#0e6b62,#1e9e8a)}
+  .g4{background:linear-gradient(135deg,#1a6b7a,#2a8a9a)}
+  .g5{background:linear-gradient(135deg,#0a7a8f,#1a9aaf)}
+
+  .lbl { font-size:9px; color:rgba(150,200,210,0.7); text-transform:uppercase; letter-spacing:.7px; margin-bottom:3px; }
+  .val { font-size:12.5px; color:rgba(220,240,245,0.92); font-weight:600; line-height:1.5; }
+  .val a { color:#5bc8d8; text-decoration:none; transition:color .2s; }
+  .val a:hover { color:#8de0ec; }
+
+  .save-tag {
+    font-size:9px; font-weight:600; color:#5bc8d8;
+    background:rgba(91,200,216,0.12); border:1px solid rgba(91,200,216,0.25);
+    border-radius:20px; padding:2px 8px; margin-left:7px;
+    cursor:pointer; white-space:nowrap; transition:background .2s;
+    vertical-align:middle; display:inline-block;
+  }
+  .save-tag:hover { background:rgba(91,200,216,0.22); }
 
   /* FOOTER */
-  .footer { background:linear-gradient(135deg,#1b3f6e 0%,#1e6f7e 100%); padding:13px 20px; text-align:center; }
-  .footer span { color:rgba(190,230,235,0.8); font-size:10.5px; }
+  .footer {
+    background:linear-gradient(135deg,rgba(27,63,110,0.8),rgba(14,90,95,0.8));
+    padding:13px 24px; text-align:center;
+    border-top:1px solid rgba(255,255,255,0.07);
+  }
+  .footer span { color:rgba(180,225,230,0.7); font-size:10.5px; letter-spacing:.2px; }
 
-  /* PDF button */
-  .btn-row { margin-top:18px; display:flex; justify-content:center; }
-  .btn { background:linear-gradient(135deg,#1b3f6e,#1e7e72); color:#fff; border:none; border-radius:30px; padding:10px 28px; font-size:13px; font-weight:600; cursor:pointer; box-shadow:0 4px 16px rgba(27,63,110,0.25); transition:opacity .2s; }
-  .btn:hover { opacity:.85; }
+  /* PDF Button */
+  .btn-row { margin-top:20px; display:flex; justify-content:center; }
+  .btn {
+    background:linear-gradient(135deg,#1b3f6e,#1e7e72); color:#fff; border:none;
+    border-radius:30px; padding:11px 32px; font-size:13px; font-weight:600;
+    cursor:pointer; letter-spacing:.3px;
+    box-shadow:0 4px 24px rgba(27,63,110,0.45);
+    transition:opacity .2s, transform .2s;
+  }
+  .btn:hover { opacity:.9; transform:translateY(-1px); }
 
   /* Toast */
-  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px); background:#1b3f6e; color:#fff; font-size:12px; font-weight:600; padding:10px 22px; border-radius:30px; opacity:0; transition:all .3s; pointer-events:none; white-space:nowrap; }
+  .toast {
+    position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(20px);
+    background:rgba(27,63,110,0.95); color:#fff; font-size:12px; font-weight:600;
+    padding:10px 22px; border-radius:30px; opacity:0; transition:all .3s;
+    pointer-events:none; white-space:nowrap;
+    border:1px solid rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+  }
   .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
-  @media print { .btn-row{display:none;} .toast{display:none;} body{background:#fff; padding:0;} }
-  @media (max-width:600px) { .card{width:100%;} .grid{grid-template-columns:1fr;} .item.full{grid-column:1;} }
+  /* ANIMATIONS */
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeUp   { from{opacity:0;transform:translateY(22px)}  to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn   { from{opacity:0} to{opacity:1} }
+  @keyframes popIn    { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+
+  .header  { animation:fadeDown .6s ease both; }
+  .body    { animation:fadeUp .6s ease .15s both; }
+  .footer  { animation:fadeIn .6s ease .25s both; }
+  .btn-row { animation:fadeUp .5s ease .35s both; }
+  .item:nth-child(1){animation:popIn .4s ease .30s both}
+  .item:nth-child(2){animation:popIn .4s ease .37s both}
+  .item:nth-child(3){animation:popIn .4s ease .44s both}
+  .item:nth-child(4){animation:popIn .4s ease .51s both}
+  .item:nth-child(5){animation:popIn .4s ease .58s both}
+  .item:nth-child(6){animation:popIn .4s ease .65s both}
+  .item:nth-child(7){animation:popIn .4s ease .72s both}
+
+  @media print { .btn-row{display:none;} .toast{display:none;} body{background:#fff;padding:0;} .card{box-shadow:none;} }
+
+  @media (max-width:600px) {
+    body { padding:0; justify-content:flex-start; }
+    .card { width:100%; border-radius:0 0 24px 24px; }
+    .header { padding:32px 20px 42px; }
+    .avatar { width:68px; height:68px; font-size:22px; }
+    .name { font-size:19px; }
+    .body { padding:20px 16px 24px; }
+    .grid { grid-template-columns:1fr; gap:9px; }
+    .item.full { grid-column:1; }
+    .ic { width:30px; height:30px; font-size:12px; }
+    .val { font-size:12px; }
+    .save-tag { font-size:8.5px; padding:2px 7px; }
+    .btn-row { padding:14px 16px 28px; }
+    .btn { width:100%; padding:12px; border-radius:12px; }
+  }
 </style>
 </head>
 <body>
 
 <div class="card">
   <div class="header">
-    <div class="avatar">SA</div>
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar">SA</div>
+    </div>
     <div class="name">Md. Sahil Ansari</div>
+    <div class="dept-badge">Backend Development</div>
     <a href="https://www.wedosolutions.sa/" target="_blank" class="company-link">
       <div class="company">Wedo Solutions Arabia for Information and Technology ↗</div>
     </a>
@@ -99,7 +262,7 @@
       </div>
 
       <div class="item full">
-        <div class="ic g5"><i class="fas fa-code"></i></div>
+        <div class="ic g3"><i class="fas fa-code"></i></div>
         <div>
           <div class="lbl">Department</div>
           <div class="val">Backend Development</div>
@@ -115,7 +278,7 @@
       </div>
 
       <div class="item full">
-        <div class="ic g6"><i class="fab fa-linkedin-in"></i></div>
+        <div class="ic g1"><i class="fab fa-linkedin-in"></i></div>
         <div>
           <div class="lbl">LinkedIn</div>
           <div class="val"><a href="https://www.linkedin.com/in/sahilansari7" target="_blank">linkedin.com/in/sahilansari7</a></div>
@@ -145,16 +308,14 @@ function showToast(msg) {
 }
 
 function saveContact(type) {
-  const both  = "TEL;TYPE=CELL,PREF:+966544410534\r\nTEL;TYPE=CELL:+917785013899";
-  const ksa   = "TEL;TYPE=CELL,PREF:+966544410534";
-  const ind   = "TEL;TYPE=CELL:+917785013899";
-  const tel   = type === 'KSA' ? ksa : type === 'IND' ? ind : both;
+  const ksa  = "TEL;TYPE=CELL,PREF:+966544410534";
+  const ind  = "TEL;TYPE=CELL:+917785013899";
+  const both = ksa + "\r\n" + ind;
+  const tel  = type === 'KSA' ? ksa : type === 'IND' ? ind : both;
 
   const vcard = [
-    "BEGIN:VCARD",
-    "VERSION:3.0",
-    "FN:Md. Sahil Ansari",
-    "N:Ansari;Sahil;;;",
+    "BEGIN:VCARD", "VERSION:3.0",
+    "FN:Md. Sahil Ansari", "N:Ansari;Sahil;;;",
     "ORG:Wedo Solutions Arabia for Information and Technology",
     "TITLE:Backend Development",
     tel,
@@ -166,22 +327,17 @@ function saveContact(type) {
   ].join("\r\n");
 
   try {
-    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
+    const blob = new Blob([vcard], { type:"text/vcard;charset=utf-8" });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement("a");
-    a.href     = url;
-    a.download = "Sahil-Ansari.vcf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    const label = type === 'KSA' ? 'KSA' : type === 'IND' ? 'India' : '';
-    showToast('✅ ' + (label ? label + ' number saved!' : 'Contact saved!'));
+    a.href = url; a.download = "Sahil-Ansari.vcf";
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+    showToast(type === 'KSA' ? '✅ KSA number saved!' : type === 'IND' ? '✅ India number saved!' : '✅ Contact saved!');
   } catch(e) {
     showToast('❌ Could not save. Try another browser.');
   }
 }
 </script>
-
 </body>
 </html>
