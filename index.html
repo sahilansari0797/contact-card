@@ -101,7 +101,7 @@
   .left-div   {width:30px;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.26),transparent);margin:16px auto;animation:fadeIn .6s ease .36s both}
 
   /* Bottom company row */
-  .left-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:18px; }
+  .left-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:18px; position:relative; z-index:10; }
   .company-bottom-link {
     display:flex; align-items:center; gap:9px;
     text-decoration:none; padding:9px 11px;
@@ -110,6 +110,8 @@
     border:1px solid rgba(255,255,255,0.13);
     transition:background .2s, border-color .2s;
     animation:fadeIn .6s ease .42s both;
+    position:relative; z-index:10;
+    cursor:pointer;
   }
   .company-bottom-link:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.22); }
   .company-logo-sm { width:34px; height:34px; border-radius:8px; object-fit:contain; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.28); }
