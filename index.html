@@ -100,13 +100,20 @@
   .left-desig {margin-top:6px;font-size:9.5px;color:rgba(94,234,212,.85);text-align:center;letter-spacing:1.8px;text-transform:uppercase;animation:fadeUp .6s ease .32s both}
   .left-div   {width:30px;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.26),transparent);margin:16px auto;animation:fadeIn .6s ease .36s both}
 
-  /* Logo */
-  .logo-wrap{margin-bottom:10px;display:flex;justify-content:center;animation:fadeIn .6s ease .38s both}
-  .company-logo{width:70px;height:auto;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.35);opacity:.9;display:block}
-
-  .company-link{text-decoration:none;display:block;animation:fadeUp .6s ease .42s both}
-  .left-company{font-size:10px;color:rgba(200,235,230,.55);text-align:center;line-height:1.75;transition:color .2s}
-  .company-link:hover .left-company{color:rgba(220,245,240,.9)}
+  /* Bottom company row */
+  .left-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:18px; }
+  .company-bottom-link {
+    display:flex; align-items:center; gap:9px;
+    text-decoration:none; padding:9px 11px;
+    border-radius:13px; width:100%;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.13);
+    transition:background .2s, border-color .2s;
+    animation:fadeIn .6s ease .42s both;
+  }
+  .company-bottom-link:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.22); }
+  .company-logo-sm { width:34px; height:34px; border-radius:8px; object-fit:contain; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.28); }
+  .company-name-sm { font-size:9.5px; color:rgba(200,235,230,0.62); line-height:1.5; text-align:left; }
 
   .left-loc{margin-top:auto;padding-top:24px;text-align:center;animation:fadeIn .6s ease .5s both}
   .loc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#34c759;margin-bottom:5px;animation:glow 2s ease-in-out infinite}
@@ -256,17 +263,18 @@
           <div class="left-name">Md. Sahil Ansari</div>
           <div class="left-desig">Application Programmer</div>
           <div class="left-div"></div>
-          <div class="logo-wrap">
-            <img src="https://sahilansari0797.github.io/contact-card/wedo-logo.png"
-                 alt="Wedo Solutions" class="company-logo"
-                 onerror="this.style.display='none'">
-          </div>
-          <a href="https://www.wedosolutions.sa/" target="_blank" class="company-link">
-            <div class="left-company">Wedo Solutions Arabia for<br>Information and Technology ↗</div>
-          </a>
-          <div class="left-loc">
-            <div class="loc-dot"></div>
-            <p>Riyadh, Saudi Arabia</p>
+
+          <div class="left-bottom">
+            <a href="https://www.wedosolutions.sa/" target="_blank" class="company-bottom-link">
+              <img src="https://sahilansari0797.github.io/contact-card/wedo-logo.png"
+                   alt="Wedo Solutions" class="company-logo-sm"
+                   onerror="this.style.display='none'">
+              <span class="company-name-sm">Wedo Solutions Arabia for<br>Information and Technology</span>
+            </a>
+            <div class="left-loc">
+              <div class="loc-dot"></div>
+              <p>Riyadh, Saudi Arabia</p>
+            </div>
           </div>
         </div>
 
