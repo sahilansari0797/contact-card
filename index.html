@@ -374,13 +374,13 @@ html, body { margin: 0; padding: 0; background: #020812; }
           <div class="row" data-copy="+966544410534" data-sv="+966544410534" data-sn="KSA Mobile">
             <div class="ico" style="background:rgba(56,217,169,0.12)"><svg viewBox="0 0 24 24" style="stroke:#38D9A9"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
             <div class="rtxt"><div class="rlbl">KSA Mobile</div><div class="rval">+966 544 410 534</div></div>
-            <a class="wbtn" href="https://wa.me/966544410534" target="_blank">WhatsApp</a>
+            <a class="wbtn" href="https://wa.me/966544410534" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <button class="sbtn">Save</button>
           </div>
           <div class="row" data-copy="+917785013899" data-sv="+917785013899" data-sn="India Mobile">
             <div class="ico" style="background:rgba(99,102,241,0.12)"><svg viewBox="0 0 24 24" style="stroke:#818CF8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
             <div class="rtxt"><div class="rlbl">India Mobile</div><div class="rval">+91 778 501 3899</div></div>
-            <a class="wbtn" href="https://wa.me/917785013899" target="_blank">WhatsApp</a>
+            <a class="wbtn" href="https://wa.me/917785013899" target="_blank" rel="noopener noreferrer">WhatsApp</a>
             <button class="sbtn">Save</button>
           </div>
           <div class="row" data-copy="sahil.ansari@wedosolutions.sa">
@@ -395,11 +395,11 @@ html, body { margin: 0; padding: 0; background: #020812; }
           </div>
           <div class="row" data-open="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh">
             <div class="ico" style="background:rgba(244,63,94,0.12)"><svg viewBox="0 0 24 24" style="stroke:#F43F5E"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="rtxt"><div class="rlbl">Directions</div><div class="rval"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh" target="_blank">Wedo Solutions Arabia, Riyadh &#8599;</a></div></div>
+            <div class="rtxt"><div class="rlbl">Directions</div><div class="rval"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh" target="_blank" rel="noopener noreferrer">Wedo Solutions Arabia, Riyadh &#8599;</a></div></div>
           </div>
           <div class="row" data-open="https://linkedin.com/in/sahilansari7">
             <div class="ico" style="background:rgba(56,130,220,0.12)"><svg viewBox="0 0 24 24" style="stroke:#4A9EE8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.5"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-            <div class="rtxt"><div class="rlbl">LinkedIn</div><div class="rval"><a href="https://linkedin.com/in/sahilansari7" target="_blank">linkedin.com/in/sahilansari7 &#8599;</a></div></div>
+            <div class="rtxt"><div class="rlbl">LinkedIn</div><div class="rval"><a href="https://linkedin.com/in/sahilansari7" target="_blank" rel="noopener noreferrer">linkedin.com/in/sahilansari7 &#8599;</a></div></div>
           </div>
         </div>
       </div>
@@ -487,7 +487,7 @@ window.addEventListener('DOMContentLoaded', function() {
       if (op) {
         row.addEventListener('click', function(e) {
           if (e.target.closest('a')) return;
-          window.open(op, '_blank');
+          window.open(op, '_blank', 'noopener,noreferrer');
         });
       }
       var cb = row.querySelector('.cbtn');
