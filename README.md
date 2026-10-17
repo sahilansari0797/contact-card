@@ -1,6 +1,6 @@
 # 📇 Sahil Ansari – Digital Contact Card
 
-A professional, animated digital contact card built with HTML, CSS, and JavaScript. Hosted via GitHub Pages and accessible through a QR code embedded in my email signature.
+A premium, animated digital contact card built with pure HTML, CSS, and JavaScript. Hosted via GitHub Pages and accessible through a QR code embedded in my email signature.
 
 🔗 **Live:** [sahilansari0797.github.io/contact-card](https://sahilansari0797.github.io/contact-card/)
 
@@ -8,14 +8,16 @@ A professional, animated digital contact card built with HTML, CSS, and JavaScri
 
 ## ✨ Features
 
-- **Glassmorphism design** — dark navy/teal theme with frosted glass card effect
-- **Animated entrance** — staggered animations on page load for a premium feel
-- **Save to phone** — individual 💾 Save buttons next to each phone number, downloads a `.vcf` contact file instantly
-- **Company link** — clicking the company name redirects to the official website
-- **Email & LinkedIn links** — all contact details are tappable/clickable
+- **Dark prismatic design** — diagonal-split glass panels over an animated gradient mesh, with a glowing edge line and floating particles
+- **Holographic monogram** — large "SA" with a shifting iridescent gradient and orbiting halo rings
+- **Holographic foil** — pointer-driven rainbow sheen across the card surface (pokemon-cards-css technique, tuned subtle)
+- **3D tilt + depth parallax** — the card tilts with the cursor and content layers drift at different depths
+- **Save Contact** — one button downloads a complete `.vcf` (both numbers, both emails, LinkedIn, title, company)
+- **Per-number Save** — individual Save buttons on each phone row
+- **WhatsApp quick chat** — wa.me buttons on both numbers, opens the app directly on mobile
+- **Click-to-copy** — click any row to copy its value, with a toast confirmation; emails also have explicit Copy buttons
+- **Directions** — opens Google Maps routing from the viewer's location to the Wedo Solutions office in Riyadh
 - **QR code signature** — branded QR with company logo used as an email signature
-- **Mobile responsive** — optimised layout for all screen sizes
-- **Save as PDF** — print-friendly version with a single click
 
 ---
 
@@ -32,14 +34,14 @@ A professional, animated digital contact card built with HTML, CSS, and JavaScri
 
 1. QR code is embedded in the email signature
 2. Recipient scans the QR → lands on this hosted contact card
-3. They can tap **Save** to download the `.vcf` and add the contact to their phone instantly
+3. They tap **Save Contact** to download the `.vcf` and add me to their contacts instantly
 
 ---
 
 ## 🛠️ Built With
 
-- Pure HTML, CSS & JavaScript — no frameworks, no dependencies
-- [Font Awesome](https://fontawesome.com/) — icons
+- Pure HTML, CSS & JavaScript — no frameworks, no dependencies, no external requests
+- Inline SVG icons (monoline, Feather-style)
 - Hosted on **GitHub Pages** — free, permanent, no server needed
 
 ---
@@ -47,9 +49,9 @@ A professional, animated digital contact card built with HTML, CSS, and JavaScri
 ## 📬 Contact
 
 **Md. Sahil Ansari**
-Backend Developer — Wedo Solutions Arabia for Information and Technology
+Application Programmer — Wedo Solutions Arabia for Information and Technology
 Riyadh, Saudi Arabia
 
 - 🌐 [wedosolutions.sa](https://www.wedosolutions.sa/)
 - 💼 [linkedin.com/in/sahilansari7](https://www.linkedin.com/in/sahilansari7)
-- 📧 sahil.ansari@wedosolutions.saAdd a Contact Card
+- 📧 sahil.ansari@wedosolutions.sa
