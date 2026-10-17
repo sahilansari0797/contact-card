@@ -1,485 +1,565 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Md. Sahil Ansari – Contact Card</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Md. Sahil Ansari &middot; Contact Card</title>
+<meta name="description" content="Digital contact card of Md. Sahil Ansari - Application Programmer, Wedo Solutions Arabia, Riyadh">
 <style>
-  :root { --text:#1d1d1f; --text-sub:#6e6e73; --r:30px; }
-  * { margin:0; padding:0; box-sizing:border-box; }
+html, body { margin: 0; padding: 0; background: #020812; }
 
-  body {
-    font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
-    min-height:100vh;
-    background:#d4dff0;
-    background-image:
-      radial-gradient(ellipse at 18% 22%,rgba(185,205,240,0.9) 0%,transparent 52%),
-      radial-gradient(ellipse at 82% 78%,rgba(195,215,245,0.7) 0%,transparent 48%),
-      radial-gradient(ellipse at 55% 8%, rgba(210,225,250,0.6) 0%,transparent 42%);
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    padding:60px 24px;
-    perspective:1600px;
-    overflow-x:hidden;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:host { display: block; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
 
-  /* ── FLOAT WRAPPER ── */
-  .float-wrap {
-    position:relative;
-    display:flex; flex-direction:column; align-items:center;
-    width:100%; max-width:880px;
-    animation:floatIn .9s cubic-bezier(.22,.68,0,1.15) both;
-  }
-  @keyframes floatIn{from{opacity:0;transform:translateY(40px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.scene {
+  width: 100%; min-width: 900px; height: 100vh; min-height: 560px;
+  display: flex; align-items: center; justify-content: center;
+  background: #020812;
+  position: relative; overflow: hidden;
+  perspective: 1400px;
+}
 
-  /* ── GROUND SHADOW ── */
-  .ground-shadow {
-    position:absolute; bottom:-20px; left:7%; width:86%; height:30px;
-    background:radial-gradient(ellipse at 50% 50%,rgba(70,90,130,0.28) 0%,transparent 72%);
-    filter:blur(18px); transform:scaleY(0.36); transform-origin:center top;
-    pointer-events:none; z-index:0;
-    transition:all .08s ease;
-  }
+/* Mesh gradient BG */
+.mesh {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 70% at 15% 50%, rgba(56,217,169,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 65% at 85% 30%, rgba(99,102,241,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 55% 85%, rgba(236,72,153,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 70% 10%, rgba(56,189,248,0.09) 0%, transparent 45%),
+    #020812;
+  animation: meshDrift 16s ease-in-out infinite;
+}
+@keyframes meshDrift {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.85; transform:scale(1.04) translate(10px, -8px); }
+}
 
-  /* ── SCENE ── */
-  .scene { position:relative; z-index:1; width:100%; transform-style:preserve-3d; }
+/* Floating particles */
+.particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.p {
+  position: absolute; width: 1.5px; height: 1.5px; border-radius: 50%;
+  background: rgba(56,217,169,0.6); animation: pfloat linear infinite;
+}
+.p:nth-child(1){left:8%;animation-duration:18s;animation-delay:0s;opacity:0.5}
+.p:nth-child(2){left:25%;animation-duration:22s;animation-delay:-6s;opacity:0.4;background:rgba(99,102,241,0.7)}
+.p:nth-child(3){left:45%;animation-duration:19s;animation-delay:-3s;opacity:0.35}
+.p:nth-child(4){left:65%;animation-duration:24s;animation-delay:-10s;opacity:0.45;background:rgba(56,189,248,0.7)}
+.p:nth-child(5){left:80%;animation-duration:20s;animation-delay:-7s;opacity:0.4;background:rgba(236,72,153,0.6)}
+.p:nth-child(6){left:15%;animation-duration:26s;animation-delay:-14s;opacity:0.3}
+@keyframes pfloat { from{transform:translateY(580px)} to{transform:translateY(-20px)} }
 
-  /* ── CARD WRAP ── */
-  .card-wrap { position:relative; transform-style:preserve-3d; cursor:default; }
+.float-wrap { position: relative; perspective: 1400px; }
 
-  /* ── GLASS LIGHT BORDER ── */
-  .card-light {
-    position:absolute; inset:-2.5px;
-    border-radius:calc(var(--r) + 2.5px);
-    z-index:0; pointer-events:none;
-    background:conic-gradient(from 225deg,
-      rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.80) 45deg,
-      rgba(255,255,255,0.95) 60deg, rgba(255,255,255,0.75) 75deg,
-      rgba(255,255,255,0.05) 120deg, rgba(255,255,255,0.03) 300deg,
-      rgba(255,255,255,0.06) 360deg);
-  }
+/* Card */
+.card {
+  width: 858px; height: 518px;
+  border-radius: 24px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 60px 140px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.12);
+  animation: rise 0.85s cubic-bezier(0.22,1,0.36,1) both;
+  will-change: transform;
+}
+@keyframes rise { from{opacity:0;transform:translateY(70px) scale(0.92)} 65%{transform:translateY(-6px) scale(1.005)} to{opacity:1;transform:none} }
 
-  /* ── CARD ── */
-  .card {
-    position:relative; z-index:1;
-    display:flex; flex-direction:row;
-    border-radius:var(--r); overflow:hidden;
-    will-change:transform;
-    box-shadow:
-      0 30px 70px rgba(70,90,130,0.22),
-      0 10px 28px rgba(70,90,130,0.14),
-      0  3px  8px rgba(70,90,130,0.10),
-      inset 0 1px 0 rgba(255,255,255,0.75),
-      inset 1px 0 0 rgba(255,255,255,0.38);
-  }
+/* Top edge light */
+.card::before {
+  content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; z-index: 25;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), rgba(56,217,169,0.35), rgba(255,255,255,0.3), transparent);
+}
 
-  /* ── LEFT — dark tinted glass ── */
-  .left {
-    width:268px; flex-shrink:0;
-    background:linear-gradient(160deg,rgba(22,42,78,0.93) 0%,rgba(11,68,60,0.91) 55%,rgba(14,50,70,0.93) 100%);
-    backdrop-filter:blur(32px) saturate(150%);
-    -webkit-backdrop-filter:blur(32px) saturate(150%);
-    padding:50px 26px 42px;
-    display:flex; flex-direction:column; align-items:center;
-    position:relative; overflow:hidden;
-    border-right:1px solid rgba(255,255,255,0.09);
-  }
-  .left::before{content:'';position:absolute;top:0;left:0;right:0;height:40%;background:linear-gradient(180deg,rgba(255,255,255,0.07) 0%,transparent 100%);pointer-events:none}
-  .left::after{content:'';position:absolute;bottom:-60px;right:-60px;width:180px;height:180px;border-radius:50%;background:rgba(0,0,0,0.09);pointer-events:none}
+/* Card background */
+.card-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 55% 80% at 22% 50%, rgba(56,217,169,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 78% 35%, rgba(99,102,241,0.11) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 55% at 55% 90%, rgba(236,72,153,0.07) 0%, transparent 50%),
+    #060D1F;
+  animation: bgPulse 10s ease-in-out infinite;
+}
+@keyframes bgPulse { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.08)} }
 
-  /* Avatar */
-  .avatar-wrap{position:relative;margin-bottom:20px;animation:popIn .7s cubic-bezier(.22,.68,0,1.4) .18s both}
-  @keyframes popIn{from{opacity:0;transform:scale(.55)}to{opacity:1;transform:scale(1)}}
-  .ring{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,0.11);animation:rPulse 3s ease-in-out infinite}
-  .ring1{inset:-13px}.ring2{inset:-24px;animation-delay:.6s;opacity:.42}.ring3{inset:-37px;animation-delay:1.2s;opacity:.18}
-  @keyframes rPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-  .avatar{width:86px;height:86px;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,0.17),rgba(255,255,255,0.04));border:1.5px solid rgba(255,255,255,0.28);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;position:relative;z-index:1;box-shadow:0 8px 30px rgba(0,0,0,0.28)}
+/* Diagonal left panel */
+.left-panel {
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 360px;
+  background: linear-gradient(160deg, rgba(8,16,35,0.92) 0%, rgba(5,11,25,0.88) 100%);
+  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
+  backdrop-filter: blur(24px) saturate(140%);
+  z-index: 2;
+}
 
-  .left-name  {font-size:18px;font-weight:700;color:#fff;text-align:center;letter-spacing:-.2px;line-height:1.3;animation:fadeUp .6s ease .26s both}
-  .left-desig {margin-top:6px;font-size:9.5px;color:rgba(94,234,212,.85);text-align:center;letter-spacing:1.8px;text-transform:uppercase;animation:fadeUp .6s ease .32s both}
-  .left-div   {width:30px;height:1px;background:linear-gradient(to right,transparent,rgba(255,255,255,.26),transparent);margin:16px auto;animation:fadeIn .6s ease .36s both}
+/* Diagonal edge glow */
+.edge-glow {
+  position: absolute; top: 0; bottom: 0; z-index: 8;
+  left: 295px; width: 3px;
+  background: linear-gradient(to bottom,
+    transparent 0%, rgba(56,217,169,0.6) 20%, rgba(56,217,169,0.9) 45%,
+    rgba(99,102,241,0.7) 65%, rgba(99,102,241,0.4) 80%, transparent 100%);
+  transform: skewX(-12deg);
+  filter: blur(1px);
+  animation: edgePulse 4s ease-in-out infinite;
+}
+.edge-glow::after {
+  content: ''; position: absolute; top: 0; bottom: 0; left: -6px; right: -6px;
+  background: inherit; filter: blur(8px); opacity: 0.4;
+}
+@keyframes edgePulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
 
-  /* Bottom company row */
-  .left-bottom { margin-top:auto; width:100%; display:flex; flex-direction:column; align-items:center; gap:10px; padding-top:18px; position:relative; z-index:10; }
-  .company-bottom-link {
-    display:flex; align-items:center; gap:9px;
-    text-decoration:none; padding:9px 11px;
-    border-radius:13px; width:100%;
-    background:rgba(255,255,255,0.07);
-    border:1px solid rgba(255,255,255,0.13);
-    transition:background .2s, border-color .2s;
-    animation:fadeIn .6s ease .42s both;
-    position:relative; z-index:10;
-    cursor:pointer;
-  }
-  .company-bottom-link:hover { background:rgba(255,255,255,0.14); border-color:rgba(255,255,255,0.22); }
-  .company-logo-sm { width:34px; height:34px; border-radius:8px; object-fit:contain; flex-shrink:0; box-shadow:0 2px 8px rgba(0,0,0,0.28); }
-  .company-name-sm { font-size:9.5px; color:rgba(200,235,230,0.62); line-height:1.5; text-align:left; }
+/* Right frosted area */
+.right-panel {
+  position: absolute; top: 0; right: 0; bottom: 0; left: 290px;
+  background: rgba(6,12,28,0.5);
+  backdrop-filter: blur(12px) saturate(120%);
+  z-index: 1;
+}
 
-  .left-loc{margin-top:auto;padding-top:24px;text-align:center;animation:fadeIn .6s ease .5s both}
-  .loc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#34c759;margin-bottom:5px;animation:glow 2s ease-in-out infinite}
-  @keyframes glow{0%,100%{box-shadow:0 0 6px rgba(52,199,89,.6)}50%{box-shadow:0 0 14px rgba(52,199,89,.95)}}
-  .left-loc p{font-size:9px;color:rgba(255,255,255,.28);letter-spacing:.5px}
+/* Grain */
+.grain {
+  position: absolute; inset: 0; z-index: 20; pointer-events: none; opacity: 0.035; border-radius: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
 
-  /* ── RIGHT — frosted clear glass ── */
-  .right{
-    flex:1; position:relative;
-    background:rgba(242,246,252,0.68);
-    backdrop-filter:blur(48px) saturate(200%) brightness(108%);
-    -webkit-backdrop-filter:blur(48px) saturate(200%) brightness(108%);
-    padding:32px 26px; display:flex; flex-direction:column; justify-content:center; gap:8px;
-    overflow:hidden;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.92),inset 0 -1px 0 rgba(255,255,255,0.35),inset -1px 0 0 rgba(255,255,255,0.52);
-  }
-  .right::before{content:'';position:absolute;top:0;left:0;right:0;height:46%;background:linear-gradient(175deg,rgba(255,255,255,0.30) 0%,rgba(255,255,255,0.05) 55%,transparent 100%);pointer-events:none;z-index:1}
+/* Flash + glare + sweep */
+.flash { position: absolute; inset: 0; z-index: 9; pointer-events: none; border-radius: 24px; }
+.glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; border-radius: 24px;
+  background: radial-gradient(350px circle at 25% 20%, rgba(255,255,255,0.04) 0%, transparent 60%); }
+.sweep { position: absolute; inset: 0; z-index: 16; pointer-events: none; border-radius: 24px; overflow: hidden; }
+.sweep::before {
+  content: ''; position: absolute; top: -60%; bottom: -60%; width: 130px; left: -220px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.04), rgba(255,255,255,0.08), rgba(255,255,255,0.04), transparent);
+  animation: sweepMove 9s ease-in-out infinite;
+}
+@keyframes sweepMove {
+  0%, 52% { transform: rotate(16deg) translateX(0); }
+  78%, 100% { transform: rotate(16deg) translateX(1380px); }
+}
 
-  /* Specular glare */
-  .glare{position:absolute;inset:0;pointer-events:none;z-index:2;background:radial-gradient(circle at 65% 28%,rgba(255,255,255,0.14) 0%,transparent 55%);transition:background .05s}
+/* CONTENT */
+.content { position: absolute; inset: 0; z-index: 12; display: flex; }
 
-  /* ── CONTACT ROWS ── */
-  .item{
-    position:relative;z-index:3;
-    display:flex;align-items:center;gap:13px;
-    background:rgba(255,255,255,0.52);
-    border:1px solid rgba(255,255,255,0.82);
-    border-radius:14px;padding:12px 15px;
-    backdrop-filter:blur(8px);
-    box-shadow:0 2px 8px rgba(90,110,150,0.07),inset 0 1px 0 rgba(255,255,255,0.92);
-    transition:background .18s,transform .18s,box-shadow .18s;
-    cursor:default;
-  }
-  .item:hover{background:rgba(255,255,255,0.80);transform:translateX(4px);box-shadow:0 6px 20px rgba(90,110,150,0.12),inset 0 1px 0 rgba(255,255,255,0.96)}
+/* LEFT */
+.left { width: 310px; flex-shrink: 0; display: flex; flex-direction: column; padding: 32px 30px 30px 38px; position: relative; }
 
-  /* Stagger */
-  .item:nth-child(2){animation:slideIn .5s ease .30s both}
-  .item:nth-child(3){animation:slideIn .5s ease .37s both}
-  .item:nth-child(4){animation:slideIn .5s ease .44s both}
-  .item:nth-child(5){animation:slideIn .5s ease .51s both}
-  .item:nth-child(6){animation:slideIn .5s ease .58s both}
-  @keyframes slideIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
-  @keyframes fadeUp {from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)}}
-  @keyframes fadeIn {from{opacity:0}to{opacity:1}}
+/* Rotating halo ring behind monogram */
+.halo {
+  position: absolute; width: 240px; height: 240px; left: -46px; top: 28px;
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  background: conic-gradient(from 0deg,
+    transparent 0%, rgba(56,217,169,0.5) 10%, transparent 28%,
+    rgba(129,140,248,0.4) 52%, transparent 72%, rgba(56,217,169,0.3) 88%, transparent 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+  animation: spin 16s linear infinite;
+  opacity: 0.85;
+}
+.halo2 {
+  position: absolute; width: 290px; height: 290px; left: -71px; top: 3px;
+  border-radius: 50%; z-index: 0; pointer-events: none;
+  background: conic-gradient(from 180deg,
+    transparent 0%, rgba(129,140,248,0.3) 15%, transparent 35%,
+    rgba(56,217,169,0.25) 60%, transparent 85%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
+  animation: spinRev 22s linear infinite;
+  opacity: 0.5;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spinRev { to { transform: rotate(-360deg); } }
 
-  /* Icons */
-  .ic{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;color:#fff}
-  /* Flag glass bubble */
-  .ic.flag{background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.75);box-shadow:inset 0 1px 0 rgba(255,255,255,0.95);font-size:21px;line-height:1}
-  /* Brand icons */
-  .ic.work-mail {background:linear-gradient(135deg,#0f4c81,#1a7abf)}
-  .ic.gmail     {background:linear-gradient(135deg,#EA4335,#ff6b5b)}
-  .ic.dept      {background:linear-gradient(135deg,#d97706,#fbbf24)}
-  .ic.loc       {background:linear-gradient(135deg,#1a3a5c,#2a5a8e)}
+.co-mark {
+  font-size: 8.5px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(56,217,169,0.55); font-weight: 500; position: relative; z-index: 1;
+  animation: fu 0.5s ease both 0.15s;
+}
 
-  /* Text */
-  .lbl{font-size:9px;color:var(--text-sub);text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px}
-  .val{font-size:13px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .val a{color:#0071e3;text-decoration:none;transition:color .2s}
-  .val a:hover{color:#0077ed;text-decoration:underline}
-  .save-tag{font-size:9px;font-weight:600;color:#0071e3;background:rgba(0,113,227,0.08);border:1px solid rgba(0,113,227,0.20);border-radius:20px;padding:3px 10px;margin-left:8px;cursor:pointer;white-space:nowrap;display:inline-block;vertical-align:middle;user-select:none;transition:background .2s,transform .15s}
-  .save-tag:hover{background:rgba(0,113,227,0.16);transform:scale(1.06)}
+.mono-wrap { margin-top: 12px; position: relative; z-index: 1; animation: monoIn 0.8s cubic-bezier(0.22,1,0.36,1) both 0.25s; will-change: transform; }
+.mono {
+  font-size: 118px; font-weight: 800; letter-spacing: -0.07em; line-height: 0.85;
+  background: linear-gradient(125deg, #ffffff 0%, #b4f0da 25%, #38D9A9 50%, #818CF8 75%, #e0c3fc 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  background-size: 300% 300%; animation: mshift 8s ease-in-out infinite;
+  display: inline-block;
+  filter: drop-shadow(0 0 28px rgba(56,217,169,0.18));
+  transition: filter 0.7s ease;
+}
+.lit .mono { filter: drop-shadow(0 0 42px rgba(56,217,169,0.38)); }
+@keyframes mshift { 0%,100%{background-position:0% 60%} 50%{background-position:100% 40%} }
+@keyframes monoIn { from{opacity:0; transform:scale(0.85) translateY(16px); filter:blur(14px)} to{opacity:1; transform:none; filter:blur(0)} }
 
-  /* ── GLASS ACTION BUTTONS ── */
-  .glass-action{
-    position:relative;z-index:3;
-    display:flex;align-items:center;gap:13px;
-    border-radius:14px;padding:12px 15px;
-    text-decoration:none;
-    backdrop-filter:blur(8px);
-    box-shadow:0 2px 8px rgba(90,110,150,0.07),inset 0 1px 0 rgba(255,255,255,0.92);
-    transition:background .18s,transform .18s,box-shadow .18s;
-    cursor:pointer;
-  }
-  .maps-btn{background:rgba(234,67,53,0.07);border:1px solid rgba(234,67,53,0.25)}
-  .maps-btn:hover{background:rgba(234,67,53,0.13);transform:translateX(4px);box-shadow:0 6px 20px rgba(234,67,53,0.12),inset 0 1px 0 rgba(255,255,255,0.96)}
-  .maps-btn .ic{background:linear-gradient(135deg,#EA4335,#f87171)}
+.nameblock { margin-top: 18px; position: relative; z-index: 1; animation: fu 0.6s ease both 0.42s; will-change: transform; }
+.nname { font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: -0.02em; }
+.nrole { font-size: 9.5px; color: #38D9A9; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 500; margin-top: 6px; }
+.nco { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 8px; line-height: 1.6; }
 
-  .li-btn{background:rgba(0,119,181,0.07);border:1px solid rgba(0,119,181,0.24)}
-  .li-btn:hover{background:rgba(0,119,181,0.14);transform:translateX(4px);box-shadow:0 6px 20px rgba(0,119,181,0.12),inset 0 1px 0 rgba(255,255,255,0.96)}
-  .li-btn .ic{background:linear-gradient(135deg,#0077b5,#00a0dc)}
+.pl { position: relative; z-index: 1; margin-top: 22px; animation: fu 0.6s ease both 0.52s; will-change: transform; }
+.save-all {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 10px;
+  border: 1px solid rgba(56,217,169,0.35);
+  background: linear-gradient(135deg, rgba(56,217,169,0.16), rgba(56,217,169,0.05));
+  color: #7EEECE; font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;
+  cursor: pointer; font-family: inherit;
+  box-shadow: 0 0 18px rgba(56,217,169,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: box-shadow .25s, background .2s, transform .18s cubic-bezier(0.34,1.56,0.64,1);
+}
+.save-all:hover {
+  box-shadow: 0 0 34px rgba(56,217,169,0.32), inset 0 1px 0 rgba(255,255,255,0.16);
+  background: linear-gradient(135deg, rgba(56,217,169,0.26), rgba(56,217,169,0.1));
+}
+.save-all:active { transform: scale(0.94) !important; }
+.save-all svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
-  .btn-lbl{font-size:9px;text-transform:uppercase;letter-spacing:.7px;margin-bottom:2px}
-  .maps-btn .btn-lbl{color:rgba(185,28,28,0.75)}
-  .li-btn   .btn-lbl{color:rgba(0,100,160,0.70)}
-  .btn-val{font-size:13px;font-weight:600;display:flex;align-items:center;gap:5px}
-  .maps-btn .btn-val{color:#b91c1c}
-  .li-btn   .btn-val{color:#0077b5}
-  .btn-arrow{font-size:11px;opacity:.65}
+.loc { margin-top: auto; display: flex; align-items: center; gap: 8px; position: relative; z-index: 1; animation: fu 0.6s ease both 0.62s; will-change: transform; }
+.ldot { width: 6px; height: 6px; border-radius: 50%; background: #38D9A9; animation: lglow 2.5s ease-in-out infinite; flex-shrink: 0; }
+.ltxt { font-size: 11px; color: rgba(255,255,255,0.32); }
+@keyframes lglow { 0%,100%{box-shadow:0 0 5px rgba(56,217,169,0.6)} 50%{box-shadow:0 0 18px rgba(56,217,169,1),0 0 35px rgba(56,217,169,0.4)} }
+@keyframes fu { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
 
-  /* Stagger actions */
-  .glass-action:nth-of-type(1){animation:slideIn .5s ease .65s both}
-  .glass-action:nth-of-type(2){animation:slideIn .5s ease .72s both}
+/* RIGHT */
+.right {
+  flex: 1; display: flex; flex-direction: column; justify-content: center;
+  padding: 18px 36px 18px 30px; will-change: transform;
+}
+.right-header {
+  font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18); font-weight: 500;
+  margin-bottom: 10px; padding-left: 2px;
+  animation: fu 0.5s ease both 0.35s;
+}
 
-  /* ── TOAST ── */
-  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(29,29,31,0.90);backdrop-filter:blur(20px);color:#fff;font-size:12px;font-weight:600;padding:11px 24px;border-radius:30px;border:1px solid rgba(255,255,255,0.12);opacity:0;transition:all .3s;pointer-events:none;z-index:999;white-space:nowrap}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 10px 10px 8px;
+  border-radius: 10px;
+  cursor: pointer; will-change: transform; position: relative;
+  transition: background 0.18s;
+  animation: rin 0.55s cubic-bezier(0.22,1,0.36,1) both;
+}
+.row:hover { background: rgba(255,255,255,0.05); }
+.row + .row { border-top: 1px solid rgba(255,255,255,0.04); }
+.row:nth-child(2){animation-delay:0.40s}.row:nth-child(3){animation-delay:0.47s}
+.row:nth-child(4){animation-delay:0.54s}.row:nth-child(5){animation-delay:0.61s}
+.row:nth-child(6){animation-delay:0.68s}.row:nth-child(7){animation-delay:0.75s}
+@keyframes rin { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
 
-  /* ── PDF BUTTON ── */
-  .btn-row{position:relative;z-index:1;margin-top:22px;display:flex;justify-content:center;animation:fadeIn .7s ease .75s both}
-  .btn{background:rgba(255,255,255,0.50);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid rgba(255,255,255,0.80);color:var(--text);border-radius:30px;padding:11px 34px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 18px rgba(70,90,130,0.10),inset 0 1px 0 rgba(255,255,255,0.96);transition:all .2s}
-  .btn:hover{background:rgba(255,255,255,0.72);transform:translateY(-2px);box-shadow:0 8px 26px rgba(70,90,130,0.16),inset 0 1px 0 rgba(255,255,255,0.98)}
+.ico {
+  width: 35px; height: 35px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+}
+.ico svg { width: 15px; height: 15px; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.row:hover .ico { transform: scale(1.14); }
 
-  /* ── MOBILE ── */
-  @media(max-width:760px){
-    body{padding:0;align-items:flex-start}
-    .float-wrap{max-width:100%;animation:none}
-    .ground-shadow{display:none}
-    .card{flex-direction:column;border-radius:0 0 28px 28px;transform:none!important}
-    .card-light{display:none}
-    .left{width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,0.09);padding:40px 22px 34px}
-    .left-loc{display:none}
-    .right{padding:18px 13px 24px;gap:7px}
-    .item:hover,.glass-action:hover{transform:none}
-    .val{white-space:normal;word-break:break-word}
-    .btn-row{padding:4px 16px 30px}
-    .btn{width:100%;border-radius:14px}
-    .toast{width:80%;text-align:center}
-  }
+.rtxt { flex: 1; min-width: 0; }
+.rlbl { font-size: 8px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.25); }
+.rval { font-size: 12.5px; color: rgba(255,255,255,0.82); font-weight: 500; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rval a { color: #38D9A9; text-decoration: none; transition: color 0.15s; }
+.rval a:hover { color: #7EEECE; }
 
-  /* ── PRINT ── */
-  @media print{
-    *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-    body{background:#d4dff0!important;padding:0!important}
-    .btn-row,.toast,.ground-shadow,.card-light{display:none!important}
-    .card{transform:none!important;box-shadow:none}
-    .ring{animation:none}
-  }
+.sbtn, .cbtn {
+  flex-shrink: 0; padding: 4px 10px;
+  border-radius: 6px; border: 1px solid rgba(56,217,169,0.25);
+  background: rgba(56,217,169,0.08); color: #38D9A9;
+  font-size: 10px; font-weight: 500; cursor: pointer; font-family: inherit;
+  opacity: 0; transform: translateX(10px) scale(0.88);
+  transition: opacity 0.15s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.12s;
+}
+.row:hover .sbtn, .row:hover .cbtn { opacity: 1; transform: none; }
+.sbtn:active, .cbtn:active { transform: scale(0.91) !important; background: rgba(56,217,169,0.2) !important; }
+
+/* Copy toast */
+.toast {
+  position: absolute; bottom: 20px; left: 50%; z-index: 30;
+  transform: translateX(-50%) translateY(14px) scale(0.92);
+  padding: 8px 16px; border-radius: 20px;
+  background: rgba(10, 24, 30, 0.85);
+  border: 1px solid rgba(56,217,169,0.4);
+  backdrop-filter: blur(16px);
+  color: #7EEECE; font-size: 11.5px; font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(56,217,169,0.15);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+
+.shadow {
+  position: absolute; bottom: -48px; left: 50%;
+  transform: translateX(-50%) scaleX(0.82);
+  width: 660px; height: 55px;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%);
+  pointer-events: none; filter: blur(8px);
+}
+
+/* Holographic foil (pokemon-cards-css technique, tuned for professionalism) */
+.foil {
+  position: absolute; inset: 0; z-index: 11; pointer-events: none; border-radius: 24px;
+  background-image:
+    repeating-linear-gradient(115deg,
+      hsl(0,55%,62%) 0%, hsl(45,55%,62%) 4%, hsl(130,55%,62%) 8%,
+      hsl(185,55%,62%) 12%, hsl(250,55%,62%) 16%, hsl(300,55%,62%) 20%, hsl(0,55%,62%) 24%),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 65%);
+  background-size: 320% 320%, 120% 120%;
+  background-position: 50% 50%, center;
+  mix-blend-mode: color-dodge;
+  filter: brightness(0.65) contrast(1.25) saturate(1.4);
+  opacity: 0; transition: opacity 0.5s ease;
+}
+.lit .foil { opacity: 0.12; }
+
+/* WhatsApp button */
+.wbtn {
+  flex-shrink: 0; padding: 4px 10px;
+  border-radius: 6px; border: 1px solid rgba(37,211,102,0.35);
+  background: rgba(37,211,102,0.1); color: #4AE07F;
+  font-size: 10px; font-weight: 500; cursor: pointer; text-decoration: none; font-family: inherit;
+  opacity: 0; transform: translateX(10px) scale(0.88);
+  transition: opacity 0.15s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.12s;
+}
+.row:hover .wbtn { opacity: 1; transform: none; }
+.wbtn:active { transform: scale(0.91) !important; background: rgba(37,211,102,0.22) !important; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
 </style>
 </head>
 <body>
+<div id="scene" class="scene">
+  <div class="mesh"></div>
+  <div class="particles">
+    <div class="p"></div><div class="p"></div><div class="p"></div>
+    <div class="p"></div><div class="p"></div><div class="p"></div>
+  </div>
 
-<div class="float-wrap" id="floatWrap">
-  <div class="scene" id="scene">
-    <div class="card-wrap" id="cardWrap">
-      <div class="card-light" id="cardLight"></div>
-      <div class="card" id="card">
+  <div class="float-wrap" id="floatWrap">
+    <div class="card" id="card">
+      <div class="card-bg"></div>
+      <div class="left-panel"></div>
+      <div class="edge-glow"></div>
+      <div class="right-panel"></div>
+      <div class="grain"></div>
+      <div class="flash" id="flash"></div>
+      <div class="glare" id="glare"></div>
+      <div class="sweep"></div>
+      <div class="foil" id="foil"></div>
 
+      <div class="content">
         <!-- LEFT -->
         <div class="left">
-          <div class="avatar-wrap">
-            <div class="ring ring1"></div>
-            <div class="ring ring2"></div>
-            <div class="ring ring3"></div>
-            <div class="avatar">SA</div>
+          <div class="halo"></div>
+          <div class="halo2"></div>
+          <div class="co-mark" data-depth="0.5">Wedo Solutions Arabia</div>
+          <div class="mono-wrap" data-depth="1.6"><div class="mono" id="mono">SA</div></div>
+          <div class="nameblock" data-depth="1.0">
+            <div class="nname">Md. Sahil Ansari</div>
+            <div class="nrole">Application Programmer</div>
+            <div class="nco">Infrastructure &amp; DevOps Department</div>
           </div>
-          <div class="left-name">Md. Sahil Ansari</div>
-          <div class="left-desig">Application Programmer</div>
-          <div class="left-div"></div>
-
-          <div class="left-bottom">
-            <a href="https://www.wedosolutions.sa/" target="_blank" class="company-bottom-link">
-              <img src="https://sahilansari0797.github.io/contact-card/wedo-logo.png"
-                   alt="Wedo Solutions" class="company-logo-sm"
-                   onerror="this.style.display='none'">
-              <span class="company-name-sm">Wedo Solutions Arabia for<br>Information and Technology</span>
-            </a>
-            <div class="left-loc">
-              <div class="loc-dot"></div>
-              <p>Riyadh, Saudi Arabia</p>
-            </div>
+          <div class="pl" data-depth="0.8">
+            <button class="save-all" id="saveAll">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Save Contact
+            </button>
           </div>
+          <div class="loc" data-depth="0.5"><div class="ldot"></div><span class="ltxt">Riyadh, Saudi Arabia</span></div>
         </div>
 
         <!-- RIGHT -->
-        <div class="right">
-          <div class="glare" id="glare"></div>
-
-          <div class="item">
-            <div class="ic flag">🇸🇦</div>
-            <div>
-              <div class="lbl">KSA Mobile</div>
-              <div class="val">+966-544410534 <span class="save-tag" onclick="saveContact('KSA')">💾 Save</span></div>
-            </div>
+        <div class="right" id="right" data-depth="0.45">
+          <div class="right-header">Contact</div>
+          <div class="row" data-copy="+966544410534" data-sv="+966544410534" data-sn="KSA Mobile">
+            <div class="ico" style="background:rgba(56,217,169,0.12)"><svg viewBox="0 0 24 24" style="stroke:#38D9A9"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="rtxt"><div class="rlbl">KSA Mobile</div><div class="rval">+966 544 410 534</div></div>
+            <a class="wbtn" href="https://wa.me/966544410534" target="_blank">WhatsApp</a>
+            <button class="sbtn">Save</button>
           </div>
-
-          <div class="item">
-            <div class="ic flag">🇮🇳</div>
-            <div>
-              <div class="lbl">India Mobile</div>
-              <div class="val">+91-7785013899 <span class="save-tag" onclick="saveContact('IND')">💾 Save</span></div>
-            </div>
+          <div class="row" data-copy="+917785013899" data-sv="+917785013899" data-sn="India Mobile">
+            <div class="ico" style="background:rgba(99,102,241,0.12)"><svg viewBox="0 0 24 24" style="stroke:#818CF8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div class="rtxt"><div class="rlbl">India Mobile</div><div class="rval">+91 778 501 3899</div></div>
+            <a class="wbtn" href="https://wa.me/917785013899" target="_blank">WhatsApp</a>
+            <button class="sbtn">Save</button>
           </div>
-
-          <div class="item">
-            <div class="ic work-mail"><i class="fas fa-envelope"></i></div>
-            <div>
-              <div class="lbl">Work Email</div>
-              <div class="val"><a href="mailto:sahil.ansari@wedosolutions.sa">sahil.ansari@wedosolutions.sa</a></div>
-            </div>
+          <div class="row" data-copy="sahil.ansari@wedosolutions.sa">
+            <div class="ico" style="background:rgba(56,189,248,0.12)"><svg viewBox="0 0 24 24" style="stroke:#38BDF8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+            <div class="rtxt"><div class="rlbl">Work Email</div><div class="rval"><a href="mailto:sahil.ansari@wedosolutions.sa">sahil.ansari@wedosolutions.sa</a></div></div>
+            <button class="cbtn">Copy</button>
           </div>
-
-          <div class="item">
-            <div class="ic gmail"><i class="fab fa-google"></i></div>
-            <div>
-              <div class="lbl">Personal Email</div>
-              <div class="val"><a href="mailto:msahilansari.97@gmail.com">msahilansari.97@gmail.com</a></div>
-            </div>
+          <div class="row" data-copy="msahilansari.97@gmail.com">
+            <div class="ico" style="background:rgba(251,146,60,0.12)"><svg viewBox="0 0 24 24" style="stroke:#FB923C"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
+            <div class="rtxt"><div class="rlbl">Personal Gmail</div><div class="rval"><a href="mailto:msahilansari.97@gmail.com">msahilansari.97@gmail.com</a></div></div>
+            <button class="cbtn">Copy</button>
           </div>
-
-          <div class="item">
-            <div class="ic dept"><i class="fas fa-code"></i></div>
-            <div>
-              <div class="lbl">Department</div>
-              <div class="val">Infrastructure and Devops</div>
-            </div>
+          <div class="row" data-open="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh">
+            <div class="ico" style="background:rgba(244,63,94,0.12)"><svg viewBox="0 0 24 24" style="stroke:#F43F5E"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div class="rtxt"><div class="rlbl">Directions</div><div class="rval"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh" target="_blank">Wedo Solutions Arabia, Riyadh &#8599;</a></div></div>
           </div>
-
-          <a href="https://maps.app.goo.gl/4EC5ZLkKtZqupECy8" target="_blank" class="glass-action maps-btn">
-            <div class="ic"><i class="fas fa-location-dot"></i></div>
-            <div>
-              <div class="btn-lbl">Office Location</div>
-              <div class="btn-val">Open in Maps <span class="btn-arrow">↗</span></div>
-            </div>
-          </a>
-
-          <a href="https://www.linkedin.com/in/sahilansari7" target="_blank" class="glass-action li-btn">
-            <div class="ic"><i class="fab fa-linkedin-in"></i></div>
-            <div>
-              <div class="btn-lbl">LinkedIn Profile</div>
-              <div class="btn-val">Connect on LinkedIn <span class="btn-arrow">↗</span></div>
-            </div>
-          </a>
-
+          <div class="row" data-open="https://linkedin.com/in/sahilansari7">
+            <div class="ico" style="background:rgba(56,130,220,0.12)"><svg viewBox="0 0 24 24" style="stroke:#4A9EE8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.5"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div class="rtxt"><div class="rlbl">LinkedIn</div><div class="rval"><a href="https://linkedin.com/in/sahilansari7" target="_blank">linkedin.com/in/sahilansari7 &#8599;</a></div></div>
+          </div>
         </div>
-      </div><!-- /card -->
-    </div><!-- /card-wrap -->
-  </div><!-- /scene -->
-  <div class="ground-shadow" id="groundShadow"></div>
-</div>
+      </div>
 
-<div class="btn-row">
-  <button class="btn" onclick="window.print()">🖨️ Save as PDF</button>
+      <div class="toast" id="toast">Copied</div>
+    </div>
+    <div class="shadow" id="shadow"></div>
+  </div>
 </div>
-<div class="toast" id="toast"></div>
 
 <script>
-var card         = document.getElementById('card');
-var cardWrap     = document.getElementById('cardWrap');
-var cardLight    = document.getElementById('cardLight');
-var glare        = document.getElementById('glare');
-var groundShadow = document.getElementById('groundShadow');
-var isMobile     = function(){ return window.innerWidth <= 760; };
-var raf          = null;
+window.addEventListener('DOMContentLoaded', function() {
 
-// ── FAST transitions for hover ──
-card.style.transition      = 'transform .08s ease, box-shadow .08s ease';
-cardLight.style.transition = 'background .06s linear';
+    var self = {};
+    var scene = document.getElementById('scene');
+    var floatWrap = document.getElementById('floatWrap');
+    var card = document.getElementById('card');
+    var flash = document.getElementById('flash');
+    var glare = document.getElementById('glare');
+    var foil = document.getElementById('foil');
+    var shadow = document.getElementById('shadow');
+    var toast = document.getElementById('toast');
+    var saveAll = document.getElementById('saveAll');
+    var rows = Array.from(document.querySelectorAll('.row'));
+    var layers = Array.from(document.querySelectorAll('[data-depth]'));
 
-// ── Mouse moves OVER the card-wrap only ──
-cardWrap.addEventListener('mousemove', function(e){
-  if(isMobile()) return;
-  if(raf) cancelAnimationFrame(raf);
-  raf = requestAnimationFrame(function(){
-    var r   = card.getBoundingClientRect();
-    var cx  = r.left + r.width  / 2;
-    var cy  = r.top  + r.height / 2;
-    var dx  = (e.clientX - cx) / (r.width  / 2); // -1 to 1
-    var dy  = (e.clientY - cy) / (r.height / 2); // -1 to 1
+    self._hov = false; self._rx = 0; self._ry = 0; self._tx = 0; self._ty = 0;
+    self._t0 = Date.now();
 
-    // ── 3D TILT ──
-    var rx = dy * -5, ry = dx * 7;
-    card.style.transform =
-      'rotateX('+rx+'deg) rotateY('+ry+'deg) translateZ(22px)';
+    // Clear finished entrance animations so inline transforms (tilt, parallax) take effect
+    scene.addEventListener('animationend', function(e) {
+      var n = e.animationName;
+      if (n === 'rise' || n === 'fu' || n === 'rin' || n === 'monoIn') {
+        e.target.style.animation = 'none';
+      }
+    });
 
-    // ── DYNAMIC SHADOW ──
-    var sX = ry * -2.2, sY = rx * 2 + 55;
-    card.style.boxShadow =
-      sX+'px '+sY+'px 90px rgba(70,90,130,0.26),'+
-      '0 12px 30px rgba(70,90,130,0.15),'+
-      '0 3px 8px rgba(70,90,130,0.10),'+
-      'inset 0 1px 0 rgba(255,255,255,0.80),'+
-      'inset 1px 0 0 rgba(255,255,255,0.42)';
+    // Toast
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(self._tt);
+      self._tt = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
+    }
+    function copyText(txt, label) {
+      function done(){ showToast('Copied ' + label); }
+      function fallback() {
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); done(); } catch(err) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(done, fallback);
+      } else fallback();
+    }
 
-    // ── GROUND SHADOW shifts opposite to tilt ──
-    var gX = ry * -1.5;
-    var gW = 86 - Math.abs(ry) * 1.0;
-    var gL = (100 - gW) / 2 + gX * 0.35;
-    groundShadow.style.left      = Math.max(2, gL) + '%';
-    groundShadow.style.width     = Math.min(94, gW) + '%';
-    groundShadow.style.transform = 'scaleY('+(0.30 + Math.abs(rx) * 0.018)+')';
+    // vCard helpers
+    function downloadVcf(content, fname) {
+      var url = URL.createObjectURL(new Blob([content], {type:'text/vcard'}));
+      var a = document.createElement('a'); a.href = url; a.download = fname; a.click();
+      URL.revokeObjectURL(url);
+    }
 
-    // ── GLASS EDGE LIGHT — conic hotspot follows mouse angle ──
-    var angle = Math.atan2(dy, dx) * 180 / Math.PI;
-    cardLight.style.background =
-      'conic-gradient(from '+(angle - 38)+'deg,'+
-      'rgba(255,255,255,0.03) 0deg,'+
-      'rgba(255,255,255,0.35) 22deg,'+
-      'rgba(255,255,255,0.92) 44deg,'+
-      'rgba(255,255,255,1.00) 55deg,'+
-      'rgba(255,255,255,0.90) 66deg,'+
-      'rgba(255,255,255,0.30) 88deg,'+
-      'rgba(255,255,255,0.03) 116deg,'+
-      'rgba(255,255,255,0.01) 310deg,'+
-      'rgba(255,255,255,0.03) 360deg)';
+    // Full Save Contact
+    saveAll.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var v = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Ansari;Md. Sahil;;;\r\nFN:Md. Sahil Ansari\r\nORG:Wedo Solutions Arabia\r\nTITLE:Application Programmer\r\nTEL;TYPE=CELL,WORK:+966544410534\r\nTEL;TYPE=CELL,HOME:+917785013899\r\nEMAIL;TYPE=WORK:sahil.ansari@wedosolutions.sa\r\nEMAIL;TYPE=HOME:msahilansari.97@gmail.com\r\nURL:https://linkedin.com/in/sahilansari7\r\nADR;TYPE=WORK:;;;Riyadh;;;Saudi Arabia\r\nEND:VCARD';
+      downloadVcf(v, 'Md_Sahil_Ansari.vcf');
+      showToast('Contact downloaded');
+    });
 
-    // ── SURFACE GLARE on right panel ──
-    var gx = ((e.clientX - r.left) / r.width)  * 100;
-    var gy = ((e.clientY - r.top)  / r.height) * 100;
-    glare.style.background =
-      'radial-gradient(circle at '+gx+'% '+gy+'%,'+
-      'rgba(255,255,255,0.26) 0%,'+
-      'rgba(255,255,255,0.08) 35%,'+
-      'transparent 60%)';
-  });
+    // Rows: copy on click, open links, copy buttons, phone save buttons
+    rows.forEach(function(row) {
+      var cp = row.dataset.copy;
+      if (cp) {
+        row.addEventListener('click', function(e) {
+          if (e.target.closest('a') || e.target.closest('.sbtn') || e.target.closest('.cbtn')) return;
+          var lbl = row.querySelector('.rlbl');
+          copyText(cp, lbl ? lbl.textContent.toLowerCase() : '');
+        });
+      }
+      var op = row.dataset.open;
+      if (op) {
+        row.addEventListener('click', function(e) {
+          if (e.target.closest('a')) return;
+          window.open(op, '_blank');
+        });
+      }
+      var cb = row.querySelector('.cbtn');
+      if (cb && cp) {
+        cb.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var lbl = row.querySelector('.rlbl');
+          copyText(cp, lbl ? lbl.textContent.toLowerCase() : '');
+        });
+      }
+      var btn = row.querySelector('.sbtn');
+      var sv = row.dataset.sv; var sn = row.dataset.sn;
+      if (btn && sv) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var v = 'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:Md. Sahil Ansari\r\nORG:Wedo Solutions Arabia\r\nTEL;TYPE=CELL:' + sv + '\r\nNOTE:' + sn + '\r\nEND:VCARD';
+          downloadVcf(v, 'Sahil_' + sn.replace(/\s/g,'_') + '.vcf');
+          showToast(sn + ' saved');
+        });
+      }
+    });
+
+    // Mouse tracking
+    scene.addEventListener('mousemove', function(e) {
+      var r = card.getBoundingClientRect();
+      var mx = e.clientX - r.left; var my = e.clientY - r.top;
+      self._tx = ((my - r.height/2) / (r.height/2)) * -3.2;
+      self._ty = ((mx - r.width/2) / (r.width/2)) * 3.2;
+
+      var pct = mx / r.width;
+      var fc = pct < 0.5
+        ? 'rgba(56,217,169,' + (0.07 - pct*0.04) + ')'
+        : 'rgba(99,102,241,' + (0.04 + (pct-0.5)*0.06) + ')';
+      flash.style.background = 'radial-gradient(440px circle at '+mx+'px '+my+'px, '+fc+' 0%, transparent 70%)';
+      glare.style.background = 'radial-gradient(280px circle at '+(mx/r.width*100)+'% '+(my/r.height*100)+'%, rgba(255,255,255,0.045) 0%, transparent 60%)';
+      var fbx = 50 + ((mx / r.width) - 0.5) * 80;
+      var fby = 50 + ((my / r.height) - 0.5) * 80;
+      foil.style.backgroundPosition = fbx + '% ' + fby + '%, ' + (mx/r.width*100) + '% ' + (my/r.height*100) + '%';
+    });
+
+    scene.addEventListener('mouseenter', function() { self._hov = true; card.classList.add('lit'); });
+    scene.addEventListener('mouseleave', function() {
+      self._hov = false; self._tx = 0; self._ty = 0;
+      card.classList.remove('lit');
+    });
+
+    function tick() {
+      var t = (Date.now() - self._t0) / 1000; var sp = 0.1;
+      if (!self._hov) {
+        var fy = Math.sin(t * 0.5) * 4;
+        floatWrap.style.transform = 'translateY('+fy+'px)';
+        self._rx += (0-self._rx)*sp; self._ry += (0-self._ry)*sp;
+        shadow.style.opacity = String(0.38 + Math.sin(t*0.58)*0.08);
+        shadow.style.transform = 'translateX(-50%) scaleX('+(0.82-Math.sin(t*0.58)*0.05)+')';
+      } else {
+        floatWrap.style.transform = 'translateY(0)';
+        self._rx += (self._tx-self._rx)*sp; self._ry += (self._ty-self._ry)*sp;
+        shadow.style.transform = 'translateX(calc(-50% + '+(-self._ry*5)+'px)) scaleX('+(0.80-Math.abs(self._ry)*0.01)+')';
+        shadow.style.opacity = String(0.54+Math.abs(self._rx)*0.015+Math.abs(self._ry)*0.01);
+      }
+      card.style.transform = 'rotateX('+self._rx+'deg) rotateY('+self._ry+'deg)' + (self._hov ? ' translateZ(8px)' : '');
+
+      // Depth parallax - content layers drift with tilt
+      layers.forEach(function(el) {
+        var d = parseFloat(el.dataset.depth) || 0;
+        el.style.transform = 'translate(' + (self._ry * d * 1.8) + 'px,' + (-self._rx * d * 1.8) + 'px)';
+      });
+
+      self._raf = requestAnimationFrame(tick);
+    }
+    tick();
 });
-
-// ── Reset on mouse leave ──
-cardWrap.addEventListener('mouseleave', resetCard);
-function resetCard(){
-  if(isMobile()) return;
-  if(raf) cancelAnimationFrame(raf);
-  card.style.transform =
-    'rotateX(0deg) rotateY(0deg) translateZ(0px)';
-  card.style.boxShadow =
-    '0 30px 70px rgba(70,90,130,0.22),'+
-    '0 10px 28px rgba(70,90,130,0.14),'+
-    '0 3px 8px rgba(70,90,130,0.10),'+
-    'inset 0 1px 0 rgba(255,255,255,0.75),'+
-    'inset 1px 0 0 rgba(255,255,255,0.38)';
-  cardLight.style.background =
-    'conic-gradient(from 225deg,'+
-    'rgba(255,255,255,0.06) 0deg,rgba(255,255,255,0.80) 45deg,'+
-    'rgba(255,255,255,0.95) 60deg,rgba(255,255,255,0.75) 75deg,'+
-    'rgba(255,255,255,0.05) 120deg,rgba(255,255,255,0.03) 300deg,'+
-    'rgba(255,255,255,0.06) 360deg)';
-  glare.style.background =
-    'radial-gradient(circle at 65% 28%,rgba(255,255,255,0.14) 0%,transparent 55%)';
-  groundShadow.style.left      = '7%';
-  groundShadow.style.width     = '86%';
-  groundShadow.style.transform = 'scaleY(0.36)';
-}
-
-// ── TOAST ──
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show')},2500);
-}
-
-// ── SAVE CONTACT ──
-function saveContact(type){
-  var vcard=[
-    "BEGIN:VCARD","VERSION:3.0",
-    "FN:Md. Sahil Ansari","N:Ansari;Sahil;;;",
-    "ORG:Wedo Solutions Arabia for Information and Technology",
-    "TITLE:Application Programmer",
-    type==='KSA'?"TEL;TYPE=CELL,PREF:+966544410534":"TEL;TYPE=CELL:+917785013899",
-    "EMAIL;TYPE=WORK:sahil.ansari@wedosolutions.sa",
-    "EMAIL;TYPE=HOME:msahilansari.97@gmail.com",
-    "ADR;TYPE=WORK:;;Riyadh;;Saudi Arabia;;",
-    "URL:https://www.linkedin.com/in/sahilansari7",
-    "END:VCARD"
-  ].join("\r\n");
-  try{
-    var b=new Blob([vcard],{type:"text/vcard;charset=utf-8"});
-    var u=URL.createObjectURL(b);
-    var a=document.createElement("a");
-    a.href=u;a.download="Sahil-Ansari.vcf";
-    document.body.appendChild(a);a.click();
-    document.body.removeChild(a);URL.revokeObjectURL(u);
-    showToast(type==='KSA'?'✅ KSA number saved!':'✅ India number saved!');
-  }catch(e){showToast('❌ Could not save. Try another browser.');}
-}
 </script>
 </body>
 </html>
