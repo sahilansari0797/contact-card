@@ -6,559 +6,401 @@
 <title>Md. Sahil Ansari &middot; Contact Card</title>
 <meta name="description" content="Digital contact card of Md. Sahil Ansari - Application Programmer, Wedo Solutions Arabia, Riyadh">
 <style>
-html, body { margin: 0; padding: 0; background: #020812; }
+html, body { margin: 0; padding: 0; background: #f5f5f7; }
+@media (prefers-color-scheme: dark) { html, body { background: #000; } }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :host { display: block; font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
 
-.scene {
-  width: 100%; min-width: 1000px; height: 100vh; min-height: 560px;
-  display: flex; align-items: center; justify-content: center;
-  background: #020812;
-  position: relative; overflow: hidden;
-  perspective: 1400px;
+.stage { width: 100%; min-height: 100vh; background: #f5f5f7; padding: 24px;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* Golden rhythm: top band (r1+r2) : bottom row = 1.618 : 1
+   Type scale steps by phi: 11 -> 18 -> 29 -> 47 -> 123 */
+.grid {
+  width: 1192px; height: 672px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 1fr 1fr 1.236fr;
+  gap: 14px;
 }
 
-/* Mesh gradient BG */
-.mesh {
-  position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 70% at 15% 50%, rgba(56,217,169,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 65% at 85% 30%, rgba(99,102,241,0.15) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 60% at 55% 85%, rgba(236,72,153,0.10) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 40% at 70% 10%, rgba(56,189,248,0.09) 0%, transparent 45%),
-    #020812;
-  animation: meshDrift 16s ease-in-out infinite;
-}
-@keyframes meshDrift {
-  0%,100% { opacity:1; transform:scale(1); }
-  50% { opacity:0.85; transform:scale(1.04) translate(10px, -8px); }
-}
-
-/* Floating particles */
-.particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.p {
-  position: absolute; width: 1.5px; height: 1.5px; border-radius: 50%;
-  background: rgba(56,217,169,0.6); animation: pfloat linear infinite;
-}
-.p:nth-child(1){left:8%;animation-duration:18s;animation-delay:0s;opacity:0.5}
-.p:nth-child(2){left:25%;animation-duration:22s;animation-delay:-6s;opacity:0.4;background:rgba(99,102,241,0.7)}
-.p:nth-child(3){left:45%;animation-duration:19s;animation-delay:-3s;opacity:0.35}
-.p:nth-child(4){left:65%;animation-duration:24s;animation-delay:-10s;opacity:0.45;background:rgba(56,189,248,0.7)}
-.p:nth-child(5){left:80%;animation-duration:20s;animation-delay:-7s;opacity:0.4;background:rgba(236,72,153,0.6)}
-.p:nth-child(6){left:15%;animation-duration:26s;animation-delay:-14s;opacity:0.3}
-@keyframes pfloat { from{transform:translateY(580px)} to{transform:translateY(-20px)} }
-
-.float-wrap { position: relative; perspective: 1400px; }
-
-/* Card */
-.card {
-  width: 950px; height: 590px;
+.tile {
+  background: #ffffff;
   border-radius: 24px;
   position: relative; overflow: hidden;
-  box-shadow: 0 60px 140px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.12);
-  animation: rise 0.85s cubic-bezier(0.22,1,0.36,1) both;
+  display: flex; flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 18px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: transform 0.28s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.28s ease;
+  animation: flyIn 0.85s cubic-bezier(0.22,1,0.36,1) both;
   will-change: transform;
 }
-@keyframes rise { from{opacity:0;transform:translateY(70px) scale(0.92)} 65%{transform:translateY(-6px) scale(1.005)} to{opacity:1;transform:none} }
-
-/* Top edge light */
-.card::before {
-  content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; z-index: 25;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), rgba(56,217,169,0.35), rgba(255,255,255,0.3), transparent);
+.tile:hover { transform: translateY(-5px) scale(1.012); box-shadow: 0 2px 6px rgba(0,0,0,0.05), 0 18px 40px rgba(0,0,0,0.10); }
+.tile:active { transform: translateY(-1px) scale(0.975); transition-duration: 0.09s; }
+@keyframes flyIn {
+  from { opacity: 0; transform: translate(var(--fx, 0px), var(--fy, 0px)) scale(var(--fs, 0.6)); }
+  62% { opacity: 1; }
+  78% { transform: translate(calc(var(--fx, 0px) * -0.04), calc(var(--fy, 0px) * -0.04)) scale(1.012); }
+  to { opacity: 1; transform: none; }
 }
 
-/* Card background */
-.card-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 80% at 22% 50%, rgba(56,217,169,0.13) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 60% at 78% 35%, rgba(99,102,241,0.11) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 55% at 55% 90%, rgba(236,72,153,0.07) 0%, transparent 50%),
-    #060D1F;
-  animation: bgPulse 10s ease-in-out infinite;
-}
-@keyframes bgPulse { 0%,100%{filter:brightness(1)} 50%{filter:brightness(1.08)} }
+/* iPhone-unlock bloom: each tile flies in from its own edge, center first, edges last */
+.t1{--fx:-340px;--fy:-230px;animation-delay:.16s}
+.t2{--fx:0px;--fy:0px;--fs:0.5;animation-delay:0s}
+.t3{--fx:-380px;--fy:0px;animation-delay:.20s}
+.t4{--fx:170px;--fy:-250px;animation-delay:.10s}
+.t5{--fx:320px;--fy:-210px;animation-delay:.22s}
+.t6{--fx:420px;--fy:-130px;animation-delay:.26s}
+.t7{--fx:360px;--fy:0px;animation-delay:.24s}
+.t8{--fx:-320px;--fy:250px;animation-delay:.18s}
+.t9{--fx:-90px;--fy:290px;animation-delay:.12s}
+.t10{--fx:90px;--fy:290px;animation-delay:.14s}
+.t11{--fx:260px;--fy:270px;animation-delay:.20s}
+.t12{--fx:400px;--fy:250px;animation-delay:.28s}
 
-/* Diagonal left panel */
-.left-panel {
-  position: absolute; top: 0; left: 0; bottom: 0;
-  width: 390px;
-  background: linear-gradient(160deg, rgba(8,16,35,0.92) 0%, rgba(5,11,25,0.88) 100%);
-  clip-path: polygon(0 0, 100% 0, 82% 100%, 0 100%);
-  backdrop-filter: blur(24px) saturate(140%);
-  z-index: 2;
-}
+.lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #86868b; }
+.sub { font-size: 12.5px; color: #6e6e73; font-weight: 500; }
 
-/* Diagonal edge glow */
-.edge-glow {
-  position: absolute; top: 0; bottom: 0; z-index: 8;
-  left: 318px; width: 3px;
-  background: linear-gradient(to bottom,
-    transparent 0%, rgba(56,217,169,0.6) 20%, rgba(56,217,169,0.9) 45%,
-    rgba(99,102,241,0.7) 65%, rgba(99,102,241,0.4) 80%, transparent 100%);
-  transform: skewX(-12deg);
-  filter: blur(1px);
-  animation: edgePulse 4s ease-in-out infinite;
-}
-.edge-glow::after {
-  content: ''; position: absolute; top: 0; bottom: 0; left: -6px; right: -6px;
-  background: inherit; filter: blur(8px); opacity: 0.4;
-}
-@keyframes edgePulse { 0%,100%{opacity:0.7} 50%{opacity:1} }
-
-/* Right frosted area */
-.right-panel {
-  position: absolute; top: 0; right: 0; bottom: 0; left: 312px;
-  background: rgba(6,12,28,0.5);
-  backdrop-filter: blur(12px) saturate(120%);
-  z-index: 1;
-}
-
-/* Grain */
-.grain {
-  position: absolute; inset: 0; z-index: 20; pointer-events: none; opacity: 0.035; border-radius: 24px;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-}
-
-/* Flash + glare + sweep */
-.flash { position: absolute; inset: 0; z-index: 9; pointer-events: none; border-radius: 24px; }
-.glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; border-radius: 24px;
-  background: radial-gradient(350px circle at 25% 20%, rgba(255,255,255,0.04) 0%, transparent 60%); }
-.sweep { position: absolute; inset: 0; z-index: 16; pointer-events: none; border-radius: 24px; overflow: hidden; }
-.sweep::before {
-  content: ''; position: absolute; top: -60%; bottom: -60%; width: 130px; left: -220px;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.04), rgba(255,255,255,0.08), rgba(255,255,255,0.04), transparent);
-  animation: sweepMove 9s ease-in-out infinite;
-}
-@keyframes sweepMove {
-  0%, 52% { transform: rotate(16deg) translateX(0); }
-  78%, 100% { transform: rotate(16deg) translateX(1380px); }
-}
-
-/* CONTENT */
-.content { position: absolute; inset: 0; z-index: 12; display: flex; }
-
-/* LEFT */
-.left { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; padding: 32px 30px 30px 38px; position: relative; }
-
-/* Rotating halo ring behind monogram */
-.halo {
-  position: absolute; width: 240px; height: 240px; left: -46px; top: 28px;
-  border-radius: 50%; z-index: 0; pointer-events: none;
-  background: conic-gradient(from 0deg,
-    transparent 0%, rgba(56,217,169,0.5) 10%, transparent 28%,
-    rgba(129,140,248,0.4) 52%, transparent 72%, rgba(56,217,169,0.3) 88%, transparent 100%);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
-  animation: spin 16s linear infinite;
-  opacity: 0.85;
-}
-.halo2 {
-  position: absolute; width: 290px; height: 290px; left: -71px; top: 3px;
-  border-radius: 50%; z-index: 0; pointer-events: none;
-  background: conic-gradient(from 180deg,
-    transparent 0%, rgba(129,140,248,0.3) 15%, transparent 35%,
-    rgba(56,217,169,0.25) 60%, transparent 85%);
-  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
-  mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 calc(100% - 0.5px));
-  animation: spinRev 22s linear infinite;
-  opacity: 0.5;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes spinRev { to { transform: rotate(-360deg); } }
-
-.co-mark {
-  font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
-  color: rgba(56,217,169,0.55); font-weight: 500; position: relative; z-index: 1;
-  animation: fu 0.5s ease both 0.15s;
-}
-
-.mono-wrap { margin-top: 12px; position: relative; z-index: 1; animation: monoIn 0.8s cubic-bezier(0.22,1,0.36,1) both 0.25s; will-change: transform; }
-.mono {
-  font-size: 126px; font-weight: 800; letter-spacing: -0.07em; line-height: 0.85;
-  background: linear-gradient(125deg, #ffffff 0%, #b4f0da 25%, #38D9A9 50%, #818CF8 75%, #e0c3fc 100%);
+/* ---- Greeting ---- */
+.greet { grid-column: 1 / 3; grid-row: 1; justify-content: center; gap: 6px; }
+.greet .hey { font-size: 29px; font-weight: 700; letter-spacing: -0.03em;
+  background: linear-gradient(100deg, #0E8F6F 0%, #2C7FD4 60%, #0E8F6F 120%);
+  background-size: 220% 100%;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  background-size: 300% 300%; animation: mshift 8s ease-in-out infinite;
-  display: inline-block;
-  filter: drop-shadow(0 0 28px rgba(56,217,169,0.18));
-  transition: filter 0.7s ease;
-}
-.lit .mono { filter: drop-shadow(0 0 42px rgba(56,217,169,0.38)); }
-@keyframes mshift { 0%,100%{background-position:0% 60%} 50%{background-position:100% 40%} }
-@keyframes monoIn { from{opacity:0; transform:scale(0.85) translateY(16px); filter:blur(14px)} to{opacity:1; transform:none; filter:blur(0)} }
+  animation: heyShift 8s ease-in-out infinite; }
+@keyframes heyShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-.nameblock { margin-top: 18px; position: relative; z-index: 1; animation: fu 0.6s ease both 0.42s; will-change: transform; }
-.nname { font-size: 20px; font-weight: 600; color: rgba(255,255,255,0.95); letter-spacing: -0.02em; }
-.nrole { font-size: 11px; color: #38D9A9; letter-spacing: 0.13em; text-transform: uppercase; font-weight: 500; margin-top: 6px; }
-.nco { font-size: 12.5px; color: rgba(255,255,255,0.25); margin-top: 8px; line-height: 1.6; }
+/* ---- Role ---- */
+.role, .hero, .clock { cursor: default; }
+.role { grid-column: 1 / 3; grid-row: 2; justify-content: center; gap: 7px; }
+.role .rt { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; color: #1d1d1f; line-height: 1.25; }
+.role .rt em { font-style: normal; color: #0E8F6F; }
 
-.pl { position: relative; z-index: 1; margin-top: 22px; animation: fu 0.6s ease both 0.52s; will-change: transform; }
-.save-all {
-  display: flex; align-items: center; gap: 8px;
-  padding: 10px 18px; border-radius: 10px;
-  border: 1px solid rgba(56,217,169,0.35);
-  background: linear-gradient(135deg, rgba(56,217,169,0.16), rgba(56,217,169,0.05));
-  color: #7EEECE; font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
-  cursor: pointer; font-family: inherit;
-  box-shadow: 0 0 18px rgba(56,217,169,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
-  transition: box-shadow .25s, background .2s, transform .18s cubic-bezier(0.34,1.56,0.64,1);
-}
-.save-all:hover {
-  box-shadow: 0 0 34px rgba(56,217,169,0.32), inset 0 1px 0 rgba(255,255,255,0.16);
-  background: linear-gradient(135deg, rgba(56,217,169,0.26), rgba(56,217,169,0.1));
-}
-.save-all:active { transform: scale(0.94) !important; }
-.save-all svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* ---- Hero (idle breathing gradient) ---- */
+.hero { grid-column: 3 / 7; grid-row: 1 / 3; padding: 0; align-items: center; justify-content: center;
+  background: linear-gradient(165deg, #0E1C30 0%, #0A1526 100%); }
+.hero .hmono { font-size: 123px; font-weight: 800; letter-spacing: -0.05em; line-height: 1;
+  background: linear-gradient(125deg, #EAFBF4 0%, #7EEECE 28%, #38D9A9 52%, #818CF8 82%, #EAFBF4 110%);
+  background-size: 260% 260%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(56,217,169,0.22));
+  animation: heroShift 9s ease-in-out infinite;
+  transition: filter 0.6s ease, transform 0.5s cubic-bezier(0.34,1.4,0.64,1); }
+@keyframes heroShift { 0%,100% { background-position: 0% 60%; } 50% { background-position: 100% 40%; } }
+.hero:hover .hmono { filter: drop-shadow(0 0 52px rgba(56,217,169,0.48)); transform: scale(1.04); }
+.hero::before { content: ''; position: absolute; inset: 0;
+  background: radial-gradient(55% 45% at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 70%); }
 
-.loc { margin-top: auto; display: flex; align-items: center; gap: 8px; position: relative; z-index: 1; animation: fu 0.6s ease both 0.62s; will-change: transform; }
-.ldot { width: 6px; height: 6px; border-radius: 50%; background: #38D9A9; animation: lglow 2.5s ease-in-out infinite; flex-shrink: 0; }
-.ltxt { font-size: 12.5px; color: rgba(255,255,255,0.32); }
-@keyframes lglow { 0%,100%{box-shadow:0 0 5px rgba(56,217,169,0.6)} 50%{box-shadow:0 0 18px rgba(56,217,169,1),0 0 35px rgba(56,217,169,0.4)} }
-@keyframes fu { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+/* ---- Smart StandBy clock ---- */
+.clock { grid-column: 7 / 9; grid-row: 1 / 3; background: #000; align-items: center; justify-content: center; gap: 7px; }
+.clock .time { font-size: 47px; font-weight: 700; letter-spacing: -0.02em; color: #ff9f0a; font-variant-numeric: tabular-nums; line-height: 1; }
+.clock .city { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.clock .date { font-size: 12px; color: rgba(255,255,255,0.35); font-weight: 500; }
+.clock .status { display: flex; align-items: center; gap: 7px; margin-top: 6px;
+  padding: 5px 12px; border-radius: 20px; background: rgba(255,255,255,0.08); }
+.clock .sdot { width: 7px; height: 7px; border-radius: 50%; background: #30d158;
+  box-shadow: 0 0 8px rgba(48,209,88,0.9); animation: sPulse 2.4s ease-in-out infinite; }
+.clock .sdot.off { background: #8e8e93; box-shadow: none; animation: none; }
+.clock .stxt { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.78); }
+@keyframes sPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-/* RIGHT */
-.right {
-  flex: 1; display: flex; flex-direction: column; justify-content: center;
-  padding: 18px 36px 18px 30px; will-change: transform;
-}
-.right-header {
-  font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.18); font-weight: 500;
-  margin-bottom: 10px; padding-left: 2px;
-  animation: fu 0.5s ease both 0.35s;
-}
+/* ---- Phones ---- */
+.phone { gap: 8px; justify-content: space-between; }
+.phone .num { font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; color: #1d1d1f; font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; align-items: center; width: fit-content;
+  padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #fff; background: #30d158;
+  transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s; }
+.tile:hover .pill { transform: scale(1.09); box-shadow: 0 4px 14px rgba(48,209,88,0.35); }
+.ksa { grid-column: 9 / 11; grid-row: 1; }
+.ind { grid-column: 9 / 11; grid-row: 2; }
 
-.row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 12px 12px 12px 10px;
-  border-radius: 10px;
-  cursor: pointer; will-change: transform; position: relative;
-  transition: background 0.18s;
-  animation: rin 0.55s cubic-bezier(0.22,1,0.36,1) both;
-}
-.row:hover { background: rgba(255,255,255,0.05); }
-.row + .row { border-top: 1px solid rgba(255,255,255,0.04); }
-.row:nth-child(2){animation-delay:0.40s}.row:nth-child(3){animation-delay:0.47s}
-.row:nth-child(4){animation-delay:0.54s}.row:nth-child(5){animation-delay:0.61s}
-.row:nth-child(6){animation-delay:0.68s}.row:nth-child(7){animation-delay:0.75s}
-@keyframes rin { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
+/* ---- Save Contact ---- */
+.save { grid-column: 11 / 13; grid-row: 1 / 3; background: #ffd60a; align-items: flex-start; justify-content: space-between; }
+.save .chk { width: 52px; height: 52px; border-radius: 50%; background: #1d1d1f; display: flex; align-items: center; justify-content: center;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1); }
+.save:hover .chk { transform: scale(1.12) rotate(-8deg); }
+.save .chk svg { width: 24px; height: 24px; stroke: #ffd60a; stroke-width: 2.4; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.save .st { font-size: 20px; font-weight: 800; color: #1d1d1f; letter-spacing: -0.02em; line-height: 1.15; }
+.save .ss { font-size: 12px; font-weight: 600; color: #6b5900; margin-top: 4px; }
 
-.ico {
-  width: 40px; height: 40px; border-radius: 10px;
+/* ---- Bottom row ---- */
+.mailw { grid-column: 1 / 4; grid-row: 3; justify-content: center; gap: 18px; }
+.mailw .addr { font-size: 14px; font-weight: 700; color: #007aff; letter-spacing: -0.015em; white-space: nowrap; }
+.gmail { grid-column: 4 / 7; grid-row: 3; justify-content: center; gap: 18px; }
+.gmail .addr { font-size: 14px; font-weight: 700; color: #ff453a; letter-spacing: -0.015em; white-space: nowrap; }
+
+.li { grid-column: 7 / 9; grid-row: 3; background: #0a66c2; justify-content: space-between; }
+.li .lin { width: 50px; height: 50px; border-radius: 13px; background: #fff; display: flex; align-items: center; justify-content: center;
+  transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1); }
+.li:hover .lin { transform: scale(1.1) rotate(4deg); }
+.li .lin svg { width: 28px; height: 28px; fill: #0a66c2; }
+.li .lt { font-size: 15px; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+.li .lbl { color: rgba(255,255,255,0.65); }
+
+.map { grid-column: 9 / 11; grid-row: 3; padding: 0; justify-content: flex-end;
+  background:
+    radial-gradient(90px 60px at 68% 25%, rgba(255,69,58,0.16) 0%, transparent 70%),
+    linear-gradient(145deg, #d9f0e4 0%, #cfe8f7 55%, #dbe7fa 100%); }
+.map::before { content: ''; position: absolute; inset: 0; opacity: 0.5;
+  background-image: linear-gradient(rgba(120,160,200,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(120,160,200,0.22) 1px, transparent 1px);
+  background-size: 26px 26px; }
+.map .pin { position: absolute; top: 22%; left: 56%; width: 26px; height: 26px; }
+.map:hover .pin svg { animation: pinB 0.55s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes pinB { 0% { transform: translateY(0); } 42% { transform: translateY(-9px); } 100% { transform: translateY(0); } }
+.map .pin svg { width: 26px; height: 26px; fill: #ff453a; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25)); }
+.map .mtxt { position: relative; padding: 16px 18px; }
+.map .mt1 { font-size: 15px; font-weight: 800; color: #1d1d1f; letter-spacing: -0.01em; }
+.map .mt2 { font-size: 11px; font-weight: 600; color: #51596b; }
+
+/* ---- Company site ---- */
+.site { grid-column: 11 / 13; grid-row: 3; justify-content: space-between; }
+.site .cn { font-size: 15px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.015em; line-height: 1.3; }
+.site .cu { font-size: 12.5px; font-weight: 600; color: #0E8F6F; transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1); display: inline-block; }
+.site:hover .cu { transform: translateX(4px); }
+
+/* ---- Glass chips (Liquid-glass squircles) ---- */
+.gchip {
+  width: 52px; height: 52px; border-radius: 15px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+  background: linear-gradient(150deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.35) 100%);
+  border: 1px solid rgba(255,255,255,0.95);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.98), inset 0 -4px 10px rgba(0,0,0,0.04);
+  backdrop-filter: blur(10px);
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+  position: relative; overflow: hidden;
 }
-.ico svg { width: 17px; height: 17px; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-.row:hover .ico { transform: scale(1.14); }
+.gchip::before { content: ''; position: absolute; top: 0; left: 12%; right: 12%; height: 45%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.75), transparent); border-radius: 10px; pointer-events: none; }
+.tile:hover .gchip { transform: scale(1.1) translateY(-2px); box-shadow: 0 7px 18px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.98); }
+.gchip svg { width: 25px; height: 25px; position: relative; }
+.gc-blue { background: linear-gradient(150deg, rgba(0,122,255,0.16) 0%, rgba(0,122,255,0.05) 100%), linear-gradient(150deg, rgba(255,255,255,0.8), rgba(255,255,255,0.3)); }
+.gc-blue svg { stroke: #007aff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.gc-red { background: linear-gradient(150deg, rgba(255,69,58,0.16) 0%, rgba(255,69,58,0.05) 100%), linear-gradient(150deg, rgba(255,255,255,0.8), rgba(255,255,255,0.3)); }
+.gc-red svg { stroke: #ff453a; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+a.gchip { text-decoration: none; cursor: pointer; }
 
-.rtxt { flex: 1; min-width: 0; }
-.rlbl { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255,255,255,0.25); }
-.rval { font-size: 15px; color: rgba(255,255,255,0.82); font-weight: 500; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.rval a { color: #38D9A9; text-decoration: none; transition: color 0.15s; }
-.rval a:hover { color: #7EEECE; }
+/* Flag chips */
+.flagchip svg { width: 31px; height: 31px; border-radius: 8px; }
 
-.sbtn, .cbtn {
-  flex-shrink: 0; padding: 5px 13px;
-  border-radius: 6px; border: 1px solid rgba(56,217,169,0.25);
-  background: rgba(56,217,169,0.08); color: #38D9A9;
-  font-size: 11.5px; font-weight: 500; cursor: pointer; font-family: inherit;
-  opacity: 0; transform: translateX(10px) scale(0.88);
-  transition: opacity 0.15s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.12s;
-}
-.row:hover .sbtn, .row:hover .cbtn { opacity: 1; transform: none; }
-.sbtn:active, .cbtn:active { transform: scale(0.91) !important; background: rgba(56,217,169,0.2) !important; }
+/* Company glass logo - dark lozenge so the white wordmark reads */
+.gc-co { width: fit-content; height: 58px; padding: 0 20px; border-radius: 15px;
+  background: linear-gradient(150deg, #14253F 0%, #0A1526 100%);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -4px 10px rgba(0,0,0,0.25); }
+.gc-co::before { background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent); }
+.gc-co img { height: 32px; width: auto; position: relative; display: block; }
 
-/* Copy toast */
-.toast {
-  position: absolute; bottom: 20px; left: 50%; z-index: 30;
-  transform: translateX(-50%) translateY(14px) scale(0.92);
-  padding: 8px 16px; border-radius: 20px;
-  background: rgba(10, 24, 30, 0.85);
-  border: 1px solid rgba(56,217,169,0.4);
-  backdrop-filter: blur(16px);
-  color: #7EEECE; font-size: 13px; font-weight: 500;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(56,217,169,0.15);
+/* Phone tile header row */
+.prow { display: flex; align-items: center; gap: 10px; }
+
+/* Email tiles: twin layout, content centered */
+.mailw .mtext { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+
+/* ---- Toast ---- */
+.toast { position: fixed; bottom: 24px; left: 50%; z-index: 50;
+  transform: translateX(-50%) translateY(12px) scale(0.94);
+  padding: 9px 18px; border-radius: 22px; background: rgba(29,29,31,0.92);
+  color: #fff; font-size: 12.5px; font-weight: 600;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.25);
   opacity: 0; pointer-events: none;
-  transition: opacity 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  white-space: nowrap;
-}
+  transition: opacity 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 
-.shadow {
-  position: absolute; bottom: -48px; left: 50%;
-  transform: translateX(-50%) scaleX(0.82);
-  width: 740px; height: 60px;
-  background: radial-gradient(ellipse, rgba(0,0,0,0.6) 0%, transparent 70%);
-  pointer-events: none; filter: blur(8px);
+/* ---- Dark mode ---- */
+@media (prefers-color-scheme: dark) {
+  .stage { background: #000; }
+  .tile { background: #1c1c1e; box-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 6px 18px rgba(0,0,0,0.4); }
+  .tile:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.5), 0 18px 44px rgba(0,0,0,0.6); }
+  /* Colored tiles keep their identity in dark mode */
+  .hero { background: linear-gradient(165deg, #0E1C30 0%, #0A1526 100%); }
+  .clock { background: #000; }
+  .save { background: #ffd60a; }
+  .li { background: #0a66c2; }
+  .lbl { color: #8e8e93; }
+  .sub { color: #98989d; }
+  .role .rt, .phone .num, .map .mt1, .site .cn { color: #f5f5f7; }
+  .mailw .addr { color: #0a84ff; }
+  .gmail .addr { color: #ff6961; }
+  .clock { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); }
+  .hero { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07); }
+  .map { background:
+    radial-gradient(90px 60px at 68% 25%, rgba(255,69,58,0.22) 0%, transparent 70%),
+    linear-gradient(145deg, #16251f 0%, #152133 100%); }
+  .map::before { background-image: linear-gradient(rgba(140,170,210,0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(140,170,210,0.14) 1px, transparent 1px); }
+  .map .mt2 { color: #9fb0c4; }
+  .gchip { background: linear-gradient(150deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 100%); border-color: rgba(255,255,255,0.2);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -4px 10px rgba(0,0,0,0.2); }
+  .gchip::before { background: linear-gradient(180deg, rgba(255,255,255,0.18), transparent); }
+  .gc-blue { background: linear-gradient(150deg, rgba(10,132,255,0.22) 0%, rgba(10,132,255,0.06) 100%), linear-gradient(150deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)); }
+  .gc-blue svg { stroke: #0a84ff; }
+  .gc-red { background: linear-gradient(150deg, rgba(255,69,58,0.22) 0%, rgba(255,69,58,0.06) 100%), linear-gradient(150deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03)); }
+  .toast { background: rgba(60,60,63,0.95); }
 }
-
-/* Holographic foil (pokemon-cards-css technique, tuned for professionalism) */
-.foil {
-  position: absolute; inset: 0; z-index: 11; pointer-events: none; border-radius: 24px;
-  background-image:
-    repeating-linear-gradient(115deg,
-      hsl(0,55%,62%) 0%, hsl(45,55%,62%) 4%, hsl(130,55%,62%) 8%,
-      hsl(185,55%,62%) 12%, hsl(250,55%,62%) 16%, hsl(300,55%,62%) 20%, hsl(0,55%,62%) 24%),
-    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 65%);
-  background-size: 320% 320%, 120% 120%;
-  background-position: 50% 50%, center;
-  mix-blend-mode: color-dodge;
-  filter: brightness(0.65) contrast(1.25) saturate(1.4);
-  opacity: 0; transition: opacity 0.5s ease;
-}
-.lit .foil { opacity: 0.12; }
-
-/* WhatsApp button */
-.wbtn {
-  flex-shrink: 0; padding: 5px 13px;
-  border-radius: 6px; border: 1px solid rgba(37,211,102,0.35);
-  background: rgba(37,211,102,0.1); color: #4AE07F;
-  font-size: 11.5px; font-weight: 500; cursor: pointer; text-decoration: none; font-family: inherit;
-  opacity: 0; transform: translateX(10px) scale(0.88);
-  transition: opacity 0.15s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), background 0.12s;
-}
-.row:hover .wbtn { opacity: 1; transform: none; }
-.wbtn:active { transform: scale(0.91) !important; background: rgba(37,211,102,0.22) !important; }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
+/* ---- Responsive: tablet 2-col, phone 1-col ---- */
+@media (max-width: 1260px) {
+  .stage { align-items: flex-start; }
+  .grid { width: 100%; max-width: 760px; height: auto;
+    grid-template-columns: repeat(2, 1fr); grid-template-rows: none; grid-auto-rows: auto; }
+  .tile { grid-column: auto !important; grid-row: auto !important; min-height: 170px; }
+  .hero { grid-column: 1 / -1 !important; min-height: 280px; }
+  .hero .hmono { font-size: 96px; }
+  .clock { min-height: 230px; }
+  .tile { --fx: 0px; --fy: 60px; --fs: 0.92; }
+}
+@media (max-width: 620px) {
+  .stage { padding: 16px; }
+  .grid { grid-template-columns: 1fr; gap: 12px; }
+  .tile { min-height: 150px; }
+  .hero { min-height: 230px; }
+  .hero .hmono { font-size: 80px; }
+  .mailw .addr, .gmail .addr { white-space: normal; word-break: break-all; }
+}
 </style>
 </head>
 <body>
-<div id="scene" class="scene">
-  <div class="mesh"></div>
-  <div class="particles">
-    <div class="p"></div><div class="p"></div><div class="p"></div>
-    <div class="p"></div><div class="p"></div><div class="p"></div>
-  </div>
+<div id="stage" class="stage">
+  <div class="grid">
 
-  <div class="float-wrap" id="floatWrap">
-    <div class="card" id="card">
-      <div class="card-bg"></div>
-      <div class="left-panel"></div>
-      <div class="edge-glow"></div>
-      <div class="right-panel"></div>
-      <div class="grain"></div>
-      <div class="flash" id="flash"></div>
-      <div class="glare" id="glare"></div>
-      <div class="sweep"></div>
-      <div class="foil" id="foil"></div>
-
-      <div class="content">
-        <!-- LEFT -->
-        <div class="left">
-          <div class="halo"></div>
-          <div class="halo2"></div>
-          <div class="co-mark" data-depth="0.5">Wedo Solutions Arabia</div>
-          <div class="mono-wrap" data-depth="1.6"><div class="mono" id="mono">SA</div></div>
-          <div class="nameblock" data-depth="1.0">
-            <div class="nname">Md. Sahil Ansari</div>
-            <div class="nrole">Application Programmer</div>
-            <div class="nco">Infrastructure &amp; DevOps Department</div>
-          </div>
-          <div class="pl" data-depth="0.8">
-            <button class="save-all" id="saveAll">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Save Contact
-            </button>
-          </div>
-          <div class="loc" data-depth="0.5"><div class="ldot"></div><span class="ltxt">Riyadh, Saudi Arabia</span></div>
-        </div>
-
-        <!-- RIGHT -->
-        <div class="right" id="right" data-depth="0.45">
-          <div class="right-header">Contact</div>
-          <div class="row" data-copy="+966544410534" data-sv="+966544410534" data-sn="KSA Mobile">
-            <div class="ico" style="background:rgba(56,217,169,0.12)"><svg viewBox="0 0 24 24" style="stroke:#38D9A9"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            <div class="rtxt"><div class="rlbl">KSA Mobile</div><div class="rval">+966 544 410 534</div></div>
-            <a class="wbtn" href="https://wa.me/966544410534" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <button class="sbtn">Save</button>
-          </div>
-          <div class="row" data-copy="+917785013899" data-sv="+917785013899" data-sn="India Mobile">
-            <div class="ico" style="background:rgba(99,102,241,0.12)"><svg viewBox="0 0 24 24" style="stroke:#818CF8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-            <div class="rtxt"><div class="rlbl">India Mobile</div><div class="rval">+91 778 501 3899</div></div>
-            <a class="wbtn" href="https://wa.me/917785013899" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            <button class="sbtn">Save</button>
-          </div>
-          <div class="row" data-copy="sahil.ansari@wedosolutions.sa">
-            <div class="ico" style="background:rgba(56,189,248,0.12)"><svg viewBox="0 0 24 24" style="stroke:#38BDF8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-            <div class="rtxt"><div class="rlbl">Work Email</div><div class="rval"><a href="mailto:sahil.ansari@wedosolutions.sa">sahil.ansari@wedosolutions.sa</a></div></div>
-            <button class="cbtn">Copy</button>
-          </div>
-          <div class="row" data-copy="msahilansari.97@gmail.com">
-            <div class="ico" style="background:rgba(251,146,60,0.12)"><svg viewBox="0 0 24 24" style="stroke:#FB923C"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div>
-            <div class="rtxt"><div class="rlbl">Personal Gmail</div><div class="rval"><a href="mailto:msahilansari.97@gmail.com">msahilansari.97@gmail.com</a></div></div>
-            <button class="cbtn">Copy</button>
-          </div>
-          <div class="row" data-open="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh">
-            <div class="ico" style="background:rgba(244,63,94,0.12)"><svg viewBox="0 0 24 24" style="stroke:#F43F5E"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
-            <div class="rtxt"><div class="rlbl">Directions</div><div class="rval"><a href="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh" target="_blank" rel="noopener noreferrer">Wedo Solutions Arabia, Riyadh &#8599;</a></div></div>
-          </div>
-          <div class="row" data-open="https://linkedin.com/in/sahilansari7">
-            <div class="ico" style="background:rgba(56,130,220,0.12)"><svg viewBox="0 0 24 24" style="stroke:#4A9EE8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v1.5"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
-            <div class="rtxt"><div class="rlbl">LinkedIn</div><div class="rval"><a href="https://linkedin.com/in/sahilansari7" target="_blank" rel="noopener noreferrer">linkedin.com/in/sahilansari7 &#8599;</a></div></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="toast" id="toast">Copied</div>
+    <div class="tile greet t1" data-copy="Md. Sahil Ansari">
+      <div class="hey">Hey, I&#8217;m Sahil</div>
+      <div class="sub">Md. Sahil Ansari</div>
     </div>
-    <div class="shadow" id="shadow"></div>
+
+    <div class="tile hero t2"><div class="hmono">SA</div></div>
+
+    <div class="tile role t3">
+      <div class="lbl">Role</div>
+      <div class="rt">Application Programmer<br><em>Infrastructure &amp; DevOps</em></div>
+    </div>
+
+    <div class="tile clock t4">
+      <div class="time" id="clk">--:--</div>
+      <div class="city">Riyadh &middot; GMT+3</div>
+      <div class="date" id="clkd"></div>
+      <div class="status"><div class="sdot" id="sdot"></div><div class="stxt" id="stxt">&nbsp;</div></div>
+    </div>
+
+    <div class="tile phone ksa t5" data-open="https://wa.me/966544410534">
+      <div class="prow">
+        <div class="gchip flagchip"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#165D31"/><rect x="5" y="8.2" width="14" height="1.7" rx="0.85" fill="#fff"/><rect x="7.5" y="11" width="9" height="1.1" rx="0.55" fill="#fff" opacity="0.85"/><rect x="4.6" y="15" width="14.8" height="1.3" rx="0.65" fill="#fff"/><rect x="4" y="14.3" width="2.1" height="2.7" rx="0.6" fill="#fff"/></svg></div>
+        <div class="lbl">KSA Mobile</div>
+      </div>
+      <div class="num">+966 544 410 534</div>
+      <div class="pill">WhatsApp</div>
+    </div>
+
+    <div class="tile save t6" id="saveTile">
+      <div class="chk"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+      <div><div class="st">Save<br>Contact</div><div class="ss">One tap &middot; vCard</div></div>
+    </div>
+
+    <div class="tile phone ind t7" data-open="https://wa.me/917785013899">
+      <div class="prow">
+        <div class="gchip flagchip"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#fff"/><path d="M0 5a5 5 0 0 1 5-5h14a5 5 0 0 1 5 5v3H0z" fill="#FF9933"/><path d="M0 16h24v3a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5z" fill="#138808"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#000080" stroke-width="0.9"/><circle cx="12" cy="12" r="0.7" fill="#000080"/></svg></div>
+        <div class="lbl">India Mobile</div>
+      </div>
+      <div class="num">+91 778 501 3899</div>
+      <div class="pill">WhatsApp</div>
+    </div>
+
+    <div class="tile mailw t8" data-copy="sahil.ansari@wedosolutions.sa">
+      <a class="gchip gc-blue" href="mailto:sahil.ansari@wedosolutions.sa" title="Write an email"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+      <div class="mtext">
+        <div class="lbl">Work Email &middot; tap to copy</div>
+        <div class="addr">sahil.ansari@wedosolutions.sa</div>
+      </div>
+    </div>
+
+    <div class="tile gmail t9" data-copy="msahilansari.97@gmail.com">
+      <a class="gchip gc-red" href="mailto:msahilansari.97@gmail.com" title="Write an email"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+      <div><div class="lbl">Personal &middot; tap to copy</div>
+      <div class="addr">msahilansari.97@gmail.com</div></div>
+    </div>
+
+    <div class="tile li t10" data-open="https://linkedin.com/in/sahilansari7">
+      <div class="lin"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z"/></svg></div>
+      <div><div class="lbl">LinkedIn</div><div class="lt">in/sahilansari7</div></div>
+    </div>
+
+    <div class="tile map t11" data-open="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh">
+      <div class="pin"><svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></div>
+      <div class="mtxt"><div class="mt1">Directions</div><div class="mt2">to the office &#8599;</div></div>
+    </div>
+
+    <div class="tile site t12" data-open="https://www.wedosolutions.sa/">
+      <div class="gchip gc-co"><img src="wedo-logo.png" alt="Wedo Solutions"></div>
+      <div><div class="cn">Wedo Solutions Arabia<br>for Information &amp; Technology</div>
+      <div class="cu">wedosolutions.sa &#8599;</div></div>
+    </div>
+
   </div>
+  <div class="toast" id="toast">Copied</div>
 </div>
 
 <script>
 window.addEventListener('DOMContentLoaded', function() {
 
     var self = {};
-    var scene = document.getElementById('scene');
-    var floatWrap = document.getElementById('floatWrap');
-    var card = document.getElementById('card');
-    var flash = document.getElementById('flash');
-    var glare = document.getElementById('glare');
-    var foil = document.getElementById('foil');
-    var shadow = document.getElementById('shadow');
     var toast = document.getElementById('toast');
-    var saveAll = document.getElementById('saveAll');
-    var rows = Array.from(document.querySelectorAll('.row'));
-    var layers = Array.from(document.querySelectorAll('[data-depth]'));
 
-    self._hov = false; self._rx = 0; self._ry = 0; self._tx = 0; self._ty = 0;
-    self._t0 = Date.now();
-
-    // Clear finished entrance animations so inline transforms (tilt, parallax) take effect
-    scene.addEventListener('animationend', function(e) {
-      var n = e.animationName;
-      if (n === 'rise' || n === 'fu' || n === 'rin' || n === 'monoIn') {
-        e.target.style.animation = 'none';
-      }
+    // Release each tile from its entrance animation so hover transforms work
+    document.getElementById('stage').addEventListener('animationend', function(e) {
+      if (e.animationName === 'flyIn') e.target.style.animation = 'none';
     });
 
-    // Toast
     function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add('show');
+      toast.textContent = msg; toast.classList.add('show');
       clearTimeout(self._tt);
       self._tt = setTimeout(function(){ toast.classList.remove('show'); }, 1500);
     }
-    function copyText(txt, label) {
-      function done(){ showToast('Copied ' + label); }
-      function fallback() {
+    function copyText(txt) {
+      function fb() {
         var ta = document.createElement('textarea');
         ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
         document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); done(); } catch(err) {}
+        try { document.execCommand('copy'); showToast('Copied'); } catch(e) {}
         document.body.removeChild(ta);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(done, fallback);
-      } else fallback();
+        navigator.clipboard.writeText(txt).then(function(){ showToast('Copied'); }, fb);
+      } else fb();
     }
 
-    // vCard helpers
-    function downloadVcf(content, fname) {
-      var url = URL.createObjectURL(new Blob([content], {type:'text/vcard'}));
-      var a = document.createElement('a'); a.href = url; a.download = fname; a.click();
-      URL.revokeObjectURL(url);
+    // Smart live clock: Riyadh time + availability (work week Sun-Thu, 9:00-18:00)
+    function tickClock() {
+      try {
+        var now = new Date();
+        document.getElementById('clk').textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Riyadh', hour: '2-digit', minute: '2-digit' });
+        document.getElementById('clkd').textContent = now.toLocaleDateString('en-GB', { timeZone: 'Asia/Riyadh', weekday: 'short', day: 'numeric', month: 'short' });
+        var h = parseInt(now.toLocaleString('en-GB', { timeZone: 'Asia/Riyadh', hour: '2-digit', hour12: false }), 10);
+        var d = now.toLocaleString('en-GB', { timeZone: 'Asia/Riyadh', weekday: 'short' });
+        var work = (d !== 'Fri' && d !== 'Sat') && h >= 9 && h < 18;
+        document.getElementById('sdot').className = work ? 'sdot' : 'sdot off';
+        document.getElementById('stxt').textContent = work ? 'Available now' : 'Outside work hours';
+      } catch(e) {}
     }
+    tickClock();
+    self._ci = setInterval(tickClock, 1000);
 
-    // Full Save Contact
-    saveAll.addEventListener('click', function(e) {
-      e.stopPropagation();
+    Array.from(document.querySelectorAll('.tile')).forEach(function(t) {
+      var op = t.dataset.open; var cp = t.dataset.copy;
+      if (op) t.addEventListener('click', function(e){ if (e.target.closest('a')) return; window.open(op, '_blank', 'noopener,noreferrer'); });
+      else if (cp) t.addEventListener('click', function(e){ if (e.target.closest('a')) return; copyText(cp); });
+    });
+
+    document.getElementById('saveTile').addEventListener('click', function() {
       var v = 'BEGIN:VCARD\r\nVERSION:3.0\r\nN:Ansari;Md. Sahil;;;\r\nFN:Md. Sahil Ansari\r\nORG:Wedo Solutions Arabia\r\nTITLE:Application Programmer\r\nTEL;TYPE=CELL,WORK:+966544410534\r\nTEL;TYPE=CELL,HOME:+917785013899\r\nEMAIL;TYPE=WORK:sahil.ansari@wedosolutions.sa\r\nEMAIL;TYPE=HOME:msahilansari.97@gmail.com\r\nURL:https://linkedin.com/in/sahilansari7\r\nADR;TYPE=WORK:;;;Riyadh;;;Saudi Arabia\r\nEND:VCARD';
-      downloadVcf(v, 'Md_Sahil_Ansari.vcf');
+      var url = URL.createObjectURL(new Blob([v], {type:'text/vcard'}));
+      var a = document.createElement('a'); a.href = url; a.download = 'Md_Sahil_Ansari.vcf'; a.click();
+      URL.revokeObjectURL(url);
       showToast('Contact downloaded');
     });
-
-    // Rows: copy on click, open links, copy buttons, phone save buttons
-    rows.forEach(function(row) {
-      var cp = row.dataset.copy;
-      if (cp) {
-        row.addEventListener('click', function(e) {
-          if (e.target.closest('a') || e.target.closest('.sbtn') || e.target.closest('.cbtn')) return;
-          var lbl = row.querySelector('.rlbl');
-          copyText(cp, lbl ? lbl.textContent.toLowerCase() : '');
-        });
-      }
-      var op = row.dataset.open;
-      if (op) {
-        row.addEventListener('click', function(e) {
-          if (e.target.closest('a')) return;
-          window.open(op, '_blank', 'noopener,noreferrer');
-        });
-      }
-      var cb = row.querySelector('.cbtn');
-      if (cb && cp) {
-        cb.addEventListener('click', function(e) {
-          e.stopPropagation();
-          var lbl = row.querySelector('.rlbl');
-          copyText(cp, lbl ? lbl.textContent.toLowerCase() : '');
-        });
-      }
-      var btn = row.querySelector('.sbtn');
-      var sv = row.dataset.sv; var sn = row.dataset.sn;
-      if (btn && sv) {
-        btn.addEventListener('click', function(e) {
-          e.stopPropagation();
-          var v = 'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:Md. Sahil Ansari\r\nORG:Wedo Solutions Arabia\r\nTEL;TYPE=CELL:' + sv + '\r\nNOTE:' + sn + '\r\nEND:VCARD';
-          downloadVcf(v, 'Sahil_' + sn.replace(/\s/g,'_') + '.vcf');
-          showToast(sn + ' saved');
-        });
-      }
-    });
-
-    // Mouse tracking
-    scene.addEventListener('mousemove', function(e) {
-      var r = card.getBoundingClientRect();
-      var mx = e.clientX - r.left; var my = e.clientY - r.top;
-      self._tx = ((my - r.height/2) / (r.height/2)) * -3.2;
-      self._ty = ((mx - r.width/2) / (r.width/2)) * 3.2;
-
-      var pct = mx / r.width;
-      var fc = pct < 0.5
-        ? 'rgba(56,217,169,' + (0.07 - pct*0.04) + ')'
-        : 'rgba(99,102,241,' + (0.04 + (pct-0.5)*0.06) + ')';
-      flash.style.background = 'radial-gradient(440px circle at '+mx+'px '+my+'px, '+fc+' 0%, transparent 70%)';
-      glare.style.background = 'radial-gradient(280px circle at '+(mx/r.width*100)+'% '+(my/r.height*100)+'%, rgba(255,255,255,0.045) 0%, transparent 60%)';
-      var fbx = 50 + ((mx / r.width) - 0.5) * 80;
-      var fby = 50 + ((my / r.height) - 0.5) * 80;
-      foil.style.backgroundPosition = fbx + '% ' + fby + '%, ' + (mx/r.width*100) + '% ' + (my/r.height*100) + '%';
-    });
-
-    scene.addEventListener('mouseenter', function() { self._hov = true; card.classList.add('lit'); });
-    scene.addEventListener('mouseleave', function() {
-      self._hov = false; self._tx = 0; self._ty = 0;
-      card.classList.remove('lit');
-    });
-
-    function tick() {
-      var t = (Date.now() - self._t0) / 1000; var sp = 0.1;
-      if (!self._hov) {
-        var fy = Math.sin(t * 0.5) * 4;
-        floatWrap.style.transform = 'translateY('+fy+'px)';
-        self._rx += (0-self._rx)*sp; self._ry += (0-self._ry)*sp;
-        shadow.style.opacity = String(0.38 + Math.sin(t*0.58)*0.08);
-        shadow.style.transform = 'translateX(-50%) scaleX('+(0.82-Math.sin(t*0.58)*0.05)+')';
-      } else {
-        floatWrap.style.transform = 'translateY(0)';
-        self._rx += (self._tx-self._rx)*sp; self._ry += (self._ty-self._ry)*sp;
-        shadow.style.transform = 'translateX(calc(-50% + '+(-self._ry*5)+'px)) scaleX('+(0.80-Math.abs(self._ry)*0.01)+')';
-        shadow.style.opacity = String(0.54+Math.abs(self._rx)*0.015+Math.abs(self._ry)*0.01);
-      }
-      card.style.transform = 'rotateX('+self._rx+'deg) rotateY('+self._ry+'deg)' + (self._hov ? ' translateZ(8px)' : '');
-
-      // Depth parallax - content layers drift with tilt
-      layers.forEach(function(el) {
-        var d = parseFloat(el.dataset.depth) || 0;
-        el.style.transform = 'translate(' + (self._ry * d * 1.8) + 'px,' + (-self._rx * d * 1.8) + 'px)';
-      });
-
-      self._raf = requestAnimationFrame(tick);
-    }
-    tick();
 });
 </script>
 </body>
