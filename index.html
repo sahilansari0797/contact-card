@@ -199,6 +199,29 @@ a.gchip { text-decoration: none; cursor: pointer; }
 /* Email tiles: twin layout, content centered */
 .mailw .mtext { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 
+/* ---- Language toggle (on the hero tile) ---- */
+.lang-toggle {
+  position: absolute; top: 14px; inset-inline-end: 14px; z-index: 5;
+  padding: 7px 15px; border-radius: 20px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.22);
+  backdrop-filter: blur(10px);
+  color: #D9F3EA; font-size: 12.5px; font-weight: 600; font-family: inherit;
+  cursor: pointer; letter-spacing: 0;
+  transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s;
+}
+.lang-toggle:hover { background: rgba(255,255,255,0.18); transform: scale(1.06); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+.lang-toggle:active { transform: scale(0.94); }
+
+/* ---- RTL: Arabic must never be letter-spaced (it breaks letter joining) ---- */
+[dir="rtl"] .lbl, [dir="rtl"] .clock .city, [dir="rtl"] .greet .hey,
+[dir="rtl"] .role .rt, [dir="rtl"] .save .st, [dir="rtl"] .site .cn,
+[dir="rtl"] .map .mt1, [dir="rtl"] .sub, [dir="rtl"] .clock .stxt,
+[dir="rtl"] .save .ss, [dir="rtl"] .map .mt2 { letter-spacing: 0; }
+
+/* Latin data always stays left-to-right, even in Arabic mode */
+.num, .addr, .time, .cu, .li .lt { direction: ltr; unicode-bidi: isolate; }
+
 /* ---- Toast ---- */
 .toast { position: fixed; bottom: 24px; left: 50%; z-index: 50;
   transform: translateX(-50%) translateY(12px) scale(0.94);
@@ -268,20 +291,20 @@ a.gchip { text-decoration: none; cursor: pointer; }
   <div class="grid">
 
     <div class="tile greet t1" data-copy="Md. Sahil Ansari">
-      <div class="hey">Hey, I&#8217;m Sahil</div>
-      <div class="sub">Md. Sahil Ansari</div>
+      <div class="hey" data-i18n="hey">Hey, I&#8217;m Sahil</div>
+      <div class="sub" data-i18n="heysub">Md. Sahil Ansari</div>
     </div>
 
-    <div class="tile hero t2"><div class="hmono">SA</div></div>
+    <div class="tile hero t2"><div class="hmono">SA</div><button class="lang-toggle" id="langBtn">عربي</button></div>
 
     <div class="tile role t3">
-      <div class="lbl">Role</div>
-      <div class="rt">Application Programmer<br><em>Infrastructure &amp; DevOps</em></div>
+      <div class="lbl" data-i18n="roleLbl">Role</div>
+      <div class="rt" data-i18n-html="roleRt">Application Programmer<br><em>Infrastructure &amp; DevOps</em></div>
     </div>
 
     <div class="tile clock t4">
       <div class="time" id="clk">--:--</div>
-      <div class="city">Riyadh &middot; GMT+3</div>
+      <div class="city" data-i18n="city">Riyadh &middot; GMT+3</div>
       <div class="date" id="clkd"></div>
       <div class="status"><div class="sdot" id="sdot"></div><div class="stxt" id="stxt">&nbsp;</div></div>
     </div>
@@ -289,54 +312,54 @@ a.gchip { text-decoration: none; cursor: pointer; }
     <div class="tile phone ksa t5" data-open="https://wa.me/966544410534">
       <div class="prow">
         <div class="gchip flagchip"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#165D31"/><rect x="5" y="8.2" width="14" height="1.7" rx="0.85" fill="#fff"/><rect x="7.5" y="11" width="9" height="1.1" rx="0.55" fill="#fff" opacity="0.85"/><rect x="4.6" y="15" width="14.8" height="1.3" rx="0.65" fill="#fff"/><rect x="4" y="14.3" width="2.1" height="2.7" rx="0.6" fill="#fff"/></svg></div>
-        <div class="lbl">KSA Mobile</div>
+        <div class="lbl" data-i18n="ksaLbl">KSA Mobile</div>
       </div>
       <div class="num">+966 544 410 534</div>
-      <div class="pill">WhatsApp</div>
+      <div class="pill" data-i18n="wa">WhatsApp</div>
     </div>
 
     <div class="tile save t6" id="saveTile">
       <div class="chk"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-      <div><div class="st">Save<br>Contact</div><div class="ss">One tap &middot; vCard</div></div>
+      <div><div class="st" data-i18n-html="saveSt">Save<br>Contact</div><div class="ss" data-i18n="saveSs">One tap &middot; vCard</div></div>
     </div>
 
     <div class="tile phone ind t7" data-open="https://wa.me/917785013899">
       <div class="prow">
         <div class="gchip flagchip"><svg viewBox="0 0 24 24"><rect width="24" height="24" rx="5" fill="#fff"/><path d="M0 5a5 5 0 0 1 5-5h14a5 5 0 0 1 5 5v3H0z" fill="#FF9933"/><path d="M0 16h24v3a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5z" fill="#138808"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="#000080" stroke-width="0.9"/><circle cx="12" cy="12" r="0.7" fill="#000080"/></svg></div>
-        <div class="lbl">India Mobile</div>
+        <div class="lbl" data-i18n="indLbl">India Mobile</div>
       </div>
       <div class="num">+91 778 501 3899</div>
-      <div class="pill">WhatsApp</div>
+      <div class="pill" data-i18n="wa">WhatsApp</div>
     </div>
 
     <div class="tile mailw t8" data-copy="sahil.ansari@wedosolutions.sa">
       <a class="gchip gc-blue" href="mailto:sahil.ansari@wedosolutions.sa" title="Write an email"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
       <div class="mtext">
-        <div class="lbl">Work Email &middot; tap to copy</div>
+        <div class="lbl" data-i18n="workLbl">Work Email &middot; tap to copy</div>
         <div class="addr">sahil.ansari@wedosolutions.sa</div>
       </div>
     </div>
 
     <div class="tile gmail t9" data-copy="msahilansari.97@gmail.com">
       <a class="gchip gc-red" href="mailto:msahilansari.97@gmail.com" title="Write an email"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
-      <div><div class="lbl">Personal &middot; tap to copy</div>
+      <div><div class="lbl" data-i18n="persLbl">Personal &middot; tap to copy</div>
       <div class="addr">msahilansari.97@gmail.com</div></div>
     </div>
 
     <div class="tile li t10" data-open="https://linkedin.com/in/sahilansari7">
       <div class="lin"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45z"/></svg></div>
-      <div><div class="lbl">LinkedIn</div><div class="lt">in/sahilansari7</div></div>
+      <div><div class="lbl" data-i18n="liLbl">LinkedIn</div><div class="lt">in/sahilansari7</div></div>
     </div>
 
     <div class="tile map t11" data-open="https://www.google.com/maps/dir/?api=1&amp;destination=Wedo+Solutions+Arabia%2C+Riyadh">
       <div class="pin"><svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg></div>
-      <div class="mtxt"><div class="mt1">Directions</div><div class="mt2">to the office &#8599;</div></div>
+      <div class="mtxt"><div class="mt1" data-i18n="dirT">Directions</div><div class="mt2" data-i18n="dirS">to the office &#8599;</div></div>
     </div>
 
     <div class="tile site t12" data-open="https://www.wedosolutions.sa/">
       <div class="gchip gc-co"><img src="wedo-logo.png" alt="Wedo Solutions"></div>
-      <div><div class="cn">Wedo Solutions Arabia<br>for Information &amp; Technology</div>
-      <div class="cu">wedosolutions.sa &#8599;</div></div>
+      <div><div class="cn" data-i18n-html="coName">Wedo Solutions Arabia<br>for Information &amp; Technology</div>
+      <div class="cu" data-i18n="coUrl">wedosolutions.sa &#8599;</div></div>
     </div>
 
   </div>
@@ -348,6 +371,69 @@ window.addEventListener('DOMContentLoaded', function() {
 
     var self = {};
     var toast = document.getElementById('toast');
+
+
+    // ---- i18n ----
+    var I18N = {
+      en: {
+        hey: 'Hey, I\u2019m Sahil', heysub: 'Md. Sahil Ansari',
+        roleLbl: 'Role', roleRt: 'Application Programmer<br><em>Infrastructure &amp; DevOps</em>',
+        city: 'Riyadh \u00b7 GMT+3',
+        avail: 'Available now', unavail: 'Outside work hours',
+        ksaLbl: 'KSA Mobile', indLbl: 'India Mobile', wa: 'WhatsApp',
+        saveSt: 'Save<br>Contact', saveSs: 'One tap \u00b7 vCard',
+        workLbl: 'Work Email \u00b7 tap to copy', persLbl: 'Personal \u00b7 tap to copy',
+        liLbl: 'LinkedIn',
+        dirT: 'Directions', dirS: 'to the office \u2197',
+        coName: 'Wedo Solutions Arabia<br>for Information &amp; Technology', coUrl: 'wedosolutions.sa \u2197',
+        copied: 'Copied', vcfDone: 'Contact downloaded',
+        toggle: '\u0639\u0631\u0628\u064a', dateLocale: 'en-GB'
+      },
+      ar: {
+        hey: '\u0645\u0631\u062d\u0628\u064b\u0627\u060c \u0623\u0646\u0627 \u0633\u0627\u062d\u0644',
+        heysub: '\u0645\u062d\u0645\u062f \u0633\u0627\u062d\u0644 \u0623\u0646\u0635\u0627\u0631\u064a',
+        roleLbl: '\u0627\u0644\u0645\u0633\u0645\u0649 \u0627\u0644\u0648\u0638\u064a\u0641\u064a',
+        roleRt: '\u0645\u0628\u0631\u0645\u062c \u062a\u0637\u0628\u064a\u0642\u0627\u062a<br><em>\u0627\u0644\u0628\u0646\u064a\u0629 \u0627\u0644\u062a\u062d\u062a\u064a\u0629 \u0648<bdi>DevOps</bdi></em>',
+        city: '\u0627\u0644\u0631\u064a\u0627\u0636 \u00b7 \u062a\u0648\u0642\u064a\u062a \u062c\u0631\u064a\u0646\u062a\u0634+3',
+        avail: '\u0645\u062a\u0627\u062d \u0627\u0644\u0622\u0646',
+        unavail: '\u062e\u0627\u0631\u062c \u0633\u0627\u0639\u0627\u062a \u0627\u0644\u0639\u0645\u0644',
+        ksaLbl: '\u062c\u0648\u0627\u0644 \u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629',
+        indLbl: '\u062c\u0648\u0627\u0644 \u0627\u0644\u0647\u0646\u062f',
+        wa: '\u0648\u0627\u062a\u0633\u0627\u0628',
+        saveSt: '\u062d\u0641\u0638<br>\u062c\u0647\u0629 \u0627\u0644\u0627\u062a\u0635\u0627\u0644',
+        saveSs: '\u0628\u0646\u0642\u0631\u0629 \u0648\u0627\u062d\u062f\u0629 \u00b7 vCard',
+        workLbl: '\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0631\u0633\u0645\u064a \u00b7 \u0627\u0646\u0642\u0631 \u0644\u0644\u0646\u0633\u062e',
+        persLbl: '\u0627\u0644\u0628\u0631\u064a\u062f \u0627\u0644\u0634\u062e\u0635\u064a \u00b7 \u0627\u0646\u0642\u0631 \u0644\u0644\u0646\u0633\u062e',
+        liLbl: '\u0644\u064a\u0646\u0643\u062f \u0625\u0646',
+        dirT: '\u0627\u0644\u0627\u062a\u062c\u0627\u0647\u0627\u062a',
+        dirS: '\u0625\u0644\u0649 \u0627\u0644\u0645\u0643\u062a\u0628 \u2196',
+        coName: '\u0634\u0631\u0643\u0629 \u0648\u064a\u062f\u0648 \u0633\u0648\u0644\u064a\u0648\u0634\u0646\u0632 \u0627\u0644\u0639\u0631\u0628\u064a\u0629<br>\u0644\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0648\u0627\u0644\u062a\u0642\u0646\u064a\u0629',
+        coUrl: 'wedosolutions.sa \u2196',
+        copied: '\u062a\u0645 \u0627\u0644\u0646\u0633\u062e',
+        vcfDone: '\u062a\u0645 \u062a\u0646\u0632\u064a\u0644 \u062c\u0647\u0629 \u0627\u0644\u0627\u062a\u0635\u0627\u0644',
+        toggle: 'English', dateLocale: 'ar-u-ca-gregory-nu-latn'
+      }
+    };
+    var lang = 'en';
+    var stageEl = document.getElementById('stage');
+    var langBtn = document.getElementById('langBtn');
+    function applyLang(l) {
+      lang = l; var L = I18N[l];
+      stageEl.setAttribute('dir', l === 'ar' ? 'rtl' : 'ltr');
+      stageEl.setAttribute('lang', l);
+      Array.from(document.querySelectorAll('[data-i18n]')).forEach(function(el) {
+        var v = L[el.dataset.i18n]; if (v !== undefined) el.textContent = v;
+      });
+      Array.from(document.querySelectorAll('[data-i18n-html]')).forEach(function(el) {
+        var v = L[el.dataset.i18nHtml]; if (v !== undefined) el.innerHTML = v;
+      });
+      langBtn.textContent = L.toggle;
+      tickClock();
+    }
+    langBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      applyLang(lang === 'en' ? 'ar' : 'en');
+    });
 
     // Release each tile from its entrance animation so hover transforms work
     document.getElementById('stage').addEventListener('animationend', function(e) {
@@ -364,11 +450,11 @@ window.addEventListener('DOMContentLoaded', function() {
         var ta = document.createElement('textarea');
         ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
         document.body.appendChild(ta); ta.select();
-        try { document.execCommand('copy'); showToast('Copied'); } catch(e) {}
+        try { document.execCommand('copy'); showToast(I18N[lang].copied); } catch(e) {}
         document.body.removeChild(ta);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(txt).then(function(){ showToast('Copied'); }, fb);
+        navigator.clipboard.writeText(txt).then(function(){ showToast(I18N[lang].copied); }, fb);
       } else fb();
     }
 
@@ -377,12 +463,12 @@ window.addEventListener('DOMContentLoaded', function() {
       try {
         var now = new Date();
         document.getElementById('clk').textContent = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Riyadh', hour: '2-digit', minute: '2-digit' });
-        document.getElementById('clkd').textContent = now.toLocaleDateString('en-GB', { timeZone: 'Asia/Riyadh', weekday: 'short', day: 'numeric', month: 'short' });
+        document.getElementById('clkd').textContent = now.toLocaleDateString(I18N[lang].dateLocale, { timeZone: 'Asia/Riyadh', weekday: 'short', day: 'numeric', month: 'short' });
         var h = parseInt(now.toLocaleString('en-GB', { timeZone: 'Asia/Riyadh', hour: '2-digit', hour12: false }), 10);
         var d = now.toLocaleString('en-GB', { timeZone: 'Asia/Riyadh', weekday: 'short' });
         var work = (d !== 'Fri' && d !== 'Sat') && h >= 9 && h < 18;
         document.getElementById('sdot').className = work ? 'sdot' : 'sdot off';
-        document.getElementById('stxt').textContent = work ? 'Available now' : 'Outside work hours';
+        document.getElementById('stxt').textContent = work ? I18N[lang].avail : I18N[lang].unavail;
       } catch(e) {}
     }
     tickClock();
@@ -399,7 +485,7 @@ window.addEventListener('DOMContentLoaded', function() {
       var url = URL.createObjectURL(new Blob([v], {type:'text/vcard'}));
       var a = document.createElement('a'); a.href = url; a.download = 'Md_Sahil_Ansari.vcf'; a.click();
       URL.revokeObjectURL(url);
-      showToast('Contact downloaded');
+      showToast(I18N[lang].vcfDone);
     });
 });
 </script>
